@@ -1,4 +1,4 @@
-package com.java.banksystemproject;
+package com.java.banksystemproject.controller;
 
 import java.io.*;
 import jakarta.servlet.http.*;
