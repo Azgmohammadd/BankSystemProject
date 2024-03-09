@@ -1,2 +1,8 @@
-package com.java.banksystemproject.entities.constants;public enum TransactionStatus {
+package com.java.banksystemproject.entities.constants;
+
+public enum TransactionStatus {
+    DONE,
+    PENDING,
+    FAILED
 }
+
