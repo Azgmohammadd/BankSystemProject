@@ -1,4 +1,4 @@
-package com.java.banksystemproject.exception;
+package com.java.banksystemproject.services.exception;
 
 public final class ExceptionMessageCodes {
     public static final String BSS_NEGATIVE_AMOUNT = "BSS_NEGATIVE_AMOUNT_IS_NOT_VALID";
