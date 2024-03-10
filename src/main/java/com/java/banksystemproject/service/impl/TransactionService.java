@@ -1,54 +1,40 @@
 package com.java.banksystemproject.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.banksystemproject.model.account.BankAccount;
-import com.java.banksystemproject.model.account.CheckingAccount;
-import com.java.banksystemproject.model.FeeDetail;
 import com.java.banksystemproject.model.Transaction;
+import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.model.constant.TransactionType;
 import com.java.banksystemproject.service.ITransactionService;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class TransactionService implements ITransactionService {
-    public static Map<TransactionType, FeeDetail> readFeeDetailsFromJson() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Map<String, Double>> jsonMap = mapper.readValue(new File(""), new TypeReference<Map<String, Map<String, Double>>>(){});
-        Map<TransactionType, FeeDetail> feeDetailMap = new HashMap<>();
+    protected final Object lock = new Object();
 
-        for (Map.Entry<String, Map<String, Double>> entry : jsonMap.entrySet()) {
-            TransactionType transactionType = TransactionType.valueOf(entry.getKey());
-            Map<String, Double> detailValues = entry.getValue();
-            double fee = detailValues.get("fee");
-            double ceilAmount = detailValues.get("ceilAmount");
-            double floorAmount = detailValues.get("floorAmount");
-            feeDetailMap.put(transactionType, new FeeDetail(fee, ceilAmount, floorAmount));
+    private double deductFees(double amount, TransactionType transactionType) {
+        switch (transactionType) {
+            case DEPOSITS, WITHDRAWALS -> {
+                double FEE_PERCENT = 0.09;
+                return Math.min(Math.max(amount * (1 + FEE_PERCENT), 1200), 10000);
+            }
+            case GET_BALANCE -> {
+                return 1200;
+            }
+            default -> {
+                return 0;
+            }
         }
-
-        return feeDetailMap;
     }
 
-    private double deductFees(BankAccount account, double amount, TransactionType transactionType) {
-        if (account instanceof CheckingAccount) {
-            FeeDetail feeDetail = FeeDetail.feeDetailMap.get(transactionType);
 
-            double fee = (1 + feeDetail.getFee()) * amount;
-
-            if (fee > feeDetail.getCeilAmount()) {
-                fee = feeDetail.getCeilAmount();
-            } else if (fee < feeDetail.getFloorAmount()) {
-                fee = feeDetail.getFloorAmount();
-            }
-
-            return fee;
+//    @Override
+    public void applyInterest(SavingAccount account) {
+        double interestAmount = (1 + account.getMonthlyInterestRate()) * account.getMinimumBalanceInMonth();
+        synchronized (lock) {
+            account.setBalance(account.getBalance() + interestAmount);
         }
-        return 0;
+        account.setMinimumBalanceInMonth(account.getBalance());
     }
 
     @Override
@@ -58,7 +44,7 @@ public class TransactionService implements ITransactionService {
                 .transactionDate(new Date())
                 .amount(amount)
                 .sourceAccount(account)
-                .fee(deductFees(account, amount, TransactionType.WITHDRAWALS))
+                .fee(deductFees(amount, TransactionType.WITHDRAWALS))
                 .build();
     }
 
@@ -69,7 +55,7 @@ public class TransactionService implements ITransactionService {
                 .transactionDate(new Date())
                 .amount(amount)
                 .sourceAccount(account)
-                .fee(deductFees(account, amount, TransactionType.DEPOSITS))
+                .fee(deductFees(amount, TransactionType.DEPOSITS))
                 .build();
     }
 
@@ -79,9 +65,16 @@ public class TransactionService implements ITransactionService {
                 .transactionType(TransactionType.GET_BALANCE)
                 .transactionDate(new Date())
                 .sourceAccount(account)
-                .fee(deductFees(account, 0, TransactionType.GET_BALANCE))
+                .fee(deductFees(0, TransactionType.GET_BALANCE))
+                .build();
+    }
+
+    public Transaction createApplyInterestTransaction(BankAccount account) {
+        return Transaction.builder()
+                .transactionType(TransactionType.APPLY_INTEREST)
+                .transactionDate(new Date())
+                .sourceAccount(account)
                 .build();
     }
 
 }
-

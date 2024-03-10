@@ -40,11 +40,14 @@ public class SavingAccountService extends BankAccountService implements ISavingA
 
     @Override
     public void applyInterest(SavingAccount account) {
+        Transaction transaction = transactionService.createApplyInterestTransaction(account);
         double interestAmount = (1 + account.getMonthlyInterestRate()) * account.getMinimumBalanceInMonth();
         synchronized (lock) {
             account.setBalance(account.getBalance() + interestAmount);
+            account.setMinimumBalanceInMonth(account.getBalance());
         }
-        account.setMinimumBalanceInMonth(account.getBalance());
+        transaction.setStatus(TransactionStatus.DONE);
+
     }
 }
 
