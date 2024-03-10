@@ -1,7 +1,7 @@
-package com.java.banksystemproject.entities;
+package com.java.banksystemproject.model;
 
-import com.java.banksystemproject.entities.constants.TransactionType;
-import com.java.banksystemproject.services.impl.TransactionService;
+import com.java.banksystemproject.model.constant.TransactionType;
+import com.java.banksystemproject.service.impl.TransactionService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

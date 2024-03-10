@@ -1,7 +1,7 @@
 package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.Dao;
-import com.java.banksystemproject.model.BankAccount;
+import com.java.banksystemproject.model.account.BankAccount;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

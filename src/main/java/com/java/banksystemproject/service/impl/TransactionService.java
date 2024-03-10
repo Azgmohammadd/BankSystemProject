@@ -1,12 +1,13 @@
-package com.java.banksystemproject.services.impl;
+package com.java.banksystemproject.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.banksystemproject.entities.BankAccount;
-import com.java.banksystemproject.entities.CheckingAccount;
-import com.java.banksystemproject.entities.FeeDetail;
-import com.java.banksystemproject.entities.Transaction;
-import com.java.banksystemproject.entities.constants.TransactionType;
+import com.java.banksystemproject.model.account.BankAccount;
+import com.java.banksystemproject.model.account.CheckingAccount;
+import com.java.banksystemproject.model.FeeDetail;
+import com.java.banksystemproject.model.Transaction;
+import com.java.banksystemproject.model.constant.TransactionType;
+import com.java.banksystemproject.service.ITransactionService;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class TransactionService {
+public class TransactionService implements ITransactionService {
     public static Map<TransactionType, FeeDetail> readFeeDetailsFromJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Map<String, Double>> jsonMap = mapper.readValue(new File(""), new TypeReference<Map<String, Map<String, Double>>>(){});
@@ -50,6 +51,7 @@ public class TransactionService {
         return 0;
     }
 
+    @Override
     public Transaction createWithdrawTransaction(BankAccount account, double amount) {
         return Transaction.builder()
                 .transactionType(TransactionType.WITHDRAWALS)
@@ -60,6 +62,7 @@ public class TransactionService {
                 .build();
     }
 
+    @Override
     public Transaction createDepositTransaction(BankAccount account, double amount) {
         return Transaction.builder()
                 .transactionType(TransactionType.DEPOSITS)
@@ -70,6 +73,7 @@ public class TransactionService {
                 .build();
     }
 
+    @Override
     public Transaction createGetBalanceTransaction(BankAccount account) {
         return Transaction.builder()
                 .transactionType(TransactionType.GET_BALANCE)

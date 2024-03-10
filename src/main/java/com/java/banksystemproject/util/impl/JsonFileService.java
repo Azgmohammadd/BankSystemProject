@@ -2,7 +2,7 @@ package com.java.banksystemproject.util.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.banksystemproject.entities.BankAccount;
+import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.util.IFileService;
 
 import java.io.File;
