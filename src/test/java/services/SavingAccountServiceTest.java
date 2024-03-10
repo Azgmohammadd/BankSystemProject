@@ -1,15 +1,12 @@
 package services;
 
-import com.java.banksystemproject.entities.SavingAccount;
-import com.java.banksystemproject.services.exception.InsufficientFundsException;
-import com.java.banksystemproject.services.exception.InvalidTransactionException;
-import com.java.banksystemproject.services.impl.SavingAccountService;
-import com.java.banksystemproject.services.impl.TransactionService;
+import com.java.banksystemproject.model.account.SavingAccount;
+import com.java.banksystemproject.service.exception.InsufficientFundsException;
+import com.java.banksystemproject.service.exception.InvalidTransactionException;
+import com.java.banksystemproject.service.account.impl.SavingAccountService;
+import com.java.banksystemproject.service.impl.TransactionService;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 

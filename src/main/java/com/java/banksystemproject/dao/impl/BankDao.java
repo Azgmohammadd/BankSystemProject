@@ -1,7 +1,7 @@
 package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.Dao;
-import com.java.banksystemproject.entities.BankAccount;
+import com.java.banksystemproject.model.account.BankAccount;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +14,7 @@ import java.util.Optional;
 @Data
 @RequiredArgsConstructor
 public class BankDao implements Dao<BankAccount>, Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
     private final Map<String, BankAccount> accountMap;

@@ -1,4 +1,4 @@
-package com.java.banksystemproject.entities;
+package com.java.banksystemproject.model.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

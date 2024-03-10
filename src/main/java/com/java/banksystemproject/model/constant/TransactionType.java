@@ -1,4 +1,4 @@
-package com.java.banksystemproject.entities.constants;
+package com.java.banksystemproject.model.constant;
 
 public enum TransactionType {
     BILL_PAYMENT,
@@ -10,5 +10,6 @@ public enum TransactionType {
     DEPOSITS,
     ACCOUNT_TRANSFERS,
     CASH_TRANSACTIONS,
-    GET_BALANCE
+    GET_BALANCE,
+    APPLY_INTEREST
 }

@@ -1,11 +1,10 @@
 package services;
 
-import com.java.banksystemproject.entities.CheckingAccount;
-import com.java.banksystemproject.services.exception.InsufficientFundsException;
-import com.java.banksystemproject.services.exception.InvalidTransactionException;
-import com.java.banksystemproject.services.impl.CheckingAccountService;
-import com.java.banksystemproject.services.impl.TransactionService;
-import lombok.RequiredArgsConstructor;
+import com.java.banksystemproject.model.account.CheckingAccount;
+import com.java.banksystemproject.service.exception.InsufficientFundsException;
+import com.java.banksystemproject.service.exception.InvalidTransactionException;
+import com.java.banksystemproject.service.account.impl.CheckingAccountService;
+import com.java.banksystemproject.service.impl.TransactionService;
 import org.junit.Before;
 import org.junit.Test;
 
