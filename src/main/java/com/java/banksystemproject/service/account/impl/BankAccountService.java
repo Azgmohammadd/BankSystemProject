@@ -37,7 +37,7 @@ public class BankAccountService implements IBankAccountService {
     }
 
     @Override
-    public synchronized void withdraw(BankAccount account, double amount) {
+    public void withdraw(BankAccount account, double amount) {
         Transaction transaction = transactionService.createWithdrawTransaction(account, amount);
         double amountWithFee = transaction.getAmount() + transaction.getFee();
 
