@@ -3,6 +3,8 @@ package com.java.banksystemproject.service.impl;
 import com.java.banksystemproject.dao.impl.BankDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.account.SavingAccount;
+import com.java.banksystemproject.service.account.ISavingAccountService;
+import com.java.banksystemproject.service.account.impl.SavingAccountService;
 
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutorService;
@@ -24,10 +26,6 @@ public class BankService {
                 executor.execute(() ->
                         totalBalance.accumulateAndGet(BigDecimal.valueOf(account.getBalance()), BigDecimal::add));
 
-            executor.shutdown();
-            while (!executor.isTerminated()) {
-                //Wait Until Executing Ends
-            }
         } // Adjust the pool size as needed
 
         return totalBalance.get();
@@ -47,10 +45,6 @@ public class BankService {
                 if (account instanceof SavingAccount savingAccount)
                     executor.execute(() -> service.applyInterest(savingAccount));
 
-            executor.shutdown();
-            while (!executor.isTerminated()) {
-                //Wait Until Executing Ends
-            }
         } // Adjust the pool size as needed
     }
 

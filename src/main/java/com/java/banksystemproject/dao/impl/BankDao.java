@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,11 +18,13 @@ public class BankDao implements Dao<BankAccount>, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private final Map<String, BankAccount> accountMap;
+    private Map<String, BankAccount> accountMap;
 
     @Override
-    public Optional<BankAccount> get(BankAccount bankAccount) {
-        return Optional.ofNullable(accountMap.get(bankAccount));
+    public Optional<BankAccount> get(String accountNumber) {
+        if (accountMap != null && accountNumber != null)
+            return Optional.ofNullable(accountMap.get(accountNumber));
+        return Optional.empty();
     }
 
     @Override
@@ -31,12 +34,16 @@ public class BankDao implements Dao<BankAccount>, Serializable {
 
     @Override
     public void save(BankAccount bankAccount) {
-        accountMap.put(bankAccount.getAccountNumber(), bankAccount);
+        if (accountMap == null)
+            accountMap = new HashMap<>();
+        if (bankAccount != null)
+            accountMap.put(bankAccount.getAccountNumber(), bankAccount);
     }
 
     @Override
     public void delete(BankAccount bankAccount) {
-        accountMap.remove(bankAccount);
+        if (accountMap != null && bankAccount != null && bankAccount.getAccountNumber() != null)
+            accountMap.remove(bankAccount.getAccountNumber());
     }
 }
 
