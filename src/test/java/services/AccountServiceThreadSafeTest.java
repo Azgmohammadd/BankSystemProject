@@ -50,11 +50,11 @@ public class AccountServiceThreadSafeTest {
             e.printStackTrace();
         }
 
-        assertEquals(checkingAccount.getBalance(), 500000d, 0);
+        assertEquals(500000d, checkingAccount.getBalance(), 0);
     }
 
     @Test()
-    public void checkingSavingThreadSafeTest(){
+    public void checkingSavingThreadSafeTest() {
         // Create a thread for apply interest
         Thread applyInterestThread = new Thread(() -> {
             for (int i = 0; i < 10; i++)
@@ -78,6 +78,6 @@ public class AccountServiceThreadSafeTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(savingAccount.getBalance(), 191293, 1);
+        assertEquals(191293, savingAccount.getBalance(), 1);
     }
 }

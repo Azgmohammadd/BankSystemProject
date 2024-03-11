@@ -26,10 +26,6 @@ public class BankService {
                 executor.execute(() ->
                         totalBalance.accumulateAndGet(BigDecimal.valueOf(account.getBalance()), BigDecimal::add));
 
-            executor.shutdown();
-            while (!executor.isTerminated()) {
-                //Wait Until Executing Ends
-            }
         } // Adjust the pool size as needed
 
         return totalBalance.get();
@@ -49,10 +45,6 @@ public class BankService {
                 if (account instanceof SavingAccount savingAccount)
                     executor.execute(() -> service.applyInterest(savingAccount));
 
-            executor.shutdown();
-            while (!executor.isTerminated()) {
-                //Wait Until Executing Ends
-            }
         } // Adjust the pool size as needed
     }
 
