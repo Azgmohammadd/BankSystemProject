@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface Dao<T> {
-    Optional<T> get(String accountNumber);
+    Optional<T> get(String id);
 //    Optional<T> get(long id);
     Collection<T> getAll();
     void save(T t);
