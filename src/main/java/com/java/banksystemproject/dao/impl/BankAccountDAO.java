@@ -2,6 +2,7 @@ package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.IBankAccountDao;
 import com.java.banksystemproject.model.account.BankAccount;
+import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.util.impl.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -52,5 +53,15 @@ public class BankAccountDAO implements IBankAccountDao {
 
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    @Override
+    public void updateBalance(BankAccount account, double amount) {
+
+    }
+
+    @Override
+    public void updateMinimumBalance(SavingAccount account, double amount) {
+
     }
 }
