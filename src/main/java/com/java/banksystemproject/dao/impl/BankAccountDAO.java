@@ -1,6 +1,6 @@
 package com.java.banksystemproject.dao.impl;
 
-import com.java.banksystemproject.dao.Dao;
+import com.java.banksystemproject.dao.IBankAccountDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.util.impl.JPAUtil;
 
@@ -8,8 +8,7 @@ import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.Optional;
 
-public class BankAccountDAO implements Dao<BankAccount>{
-
+public class BankAccountDAO implements IBankAccountDao {
     private final EntityManager entityManager = JPAUtil.getEntityManager();
 
     @Override

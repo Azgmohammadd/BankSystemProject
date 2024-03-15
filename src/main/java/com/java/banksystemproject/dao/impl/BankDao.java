@@ -1,7 +1,8 @@
 package com.java.banksystemproject.dao.impl;
 
-import com.java.banksystemproject.dao.Dao;
+import com.java.banksystemproject.dao.IBankAccountDao;
 import com.java.banksystemproject.model.account.BankAccount;
+import com.java.banksystemproject.model.account.SavingAccount;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Data
 @RequiredArgsConstructor
-public class BankDao implements Dao<BankAccount>, Serializable {
+public class BankDao implements IBankAccountDao, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -44,6 +45,16 @@ public class BankDao implements Dao<BankAccount>, Serializable {
     public void delete(BankAccount bankAccount) {
         if (accountMap != null && bankAccount != null && bankAccount.getAccountNumber() != null)
             accountMap.remove(bankAccount.getAccountNumber());
+    }
+
+    @Override
+    public void updateBalance(BankAccount account, double amount) {
+
+    }
+
+    @Override
+    public void updateMinimumBalance(SavingAccount account, double amount) {
+
     }
 }
 
