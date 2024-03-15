@@ -1,17 +1,24 @@
 package com.java.banksystemproject.service.impl;
 
+import com.java.banksystemproject.dao.IBankAccountDao;
+import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.dao.impl.BankDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.service.account.ISavingAccountService;
 import com.java.banksystemproject.service.account.impl.SavingAccountService;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
+@RequiredArgsConstructor
 public class BankService {
+    private static TransactionService transactionService;
+    private static IBankAccountDao bankAccountDao;
+    private static ITransactionDao transactionDao;
 
     //Multithreading
     public static BigDecimal calculateBankTotalBalance(BankDao bank) {
@@ -39,7 +46,7 @@ public class BankService {
 
         try (ExecutorService executor = Executors.newFixedThreadPool(16)) {
 
-        ISavingAccountService service = new SavingAccountService(new TransactionService());
+        ISavingAccountService service = new SavingAccountService(transactionService, bankAccountDao, transactionDao);
 
             for (BankAccount account : bank.getAll())
                 if (account instanceof SavingAccount savingAccount)
@@ -66,7 +73,7 @@ public class BankService {
         if (bank == null || bank.getAll() == null || bank.getAll().isEmpty())
             return;
 
-        ISavingAccountService service = new SavingAccountService(new TransactionService());
+        ISavingAccountService service = new SavingAccountService(transactionService, bankAccountDao, transactionDao);
 
         bank.getAll().parallelStream()
                 .filter(account -> account instanceof SavingAccount)

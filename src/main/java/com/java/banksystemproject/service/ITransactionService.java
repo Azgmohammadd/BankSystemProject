@@ -10,4 +10,6 @@ public interface ITransactionService {
     Transaction createDepositTransaction(BankAccount account, double amount);
 
     Transaction createGetBalanceTransaction(BankAccount account);
+
+    Transaction createApplyInterestTransaction(BankAccount account);
 }
