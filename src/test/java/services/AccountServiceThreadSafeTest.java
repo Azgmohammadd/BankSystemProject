@@ -1,5 +1,7 @@
 package services;
 
+import com.java.banksystemproject.dao.impl.JDBC.BankAccountDaoJDBC;
+import com.java.banksystemproject.dao.impl.JDBC.TransactionDaoJDBC;
 import com.java.banksystemproject.model.account.CheckingAccount;
 import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.service.account.impl.CheckingAccountService;
@@ -11,17 +13,20 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AccountServiceThreadSafeTest {
-    private final CheckingAccountService checkingAccountService = new CheckingAccountService(new TransactionService());
-    private final SavingAccountService savingAccountService = new SavingAccountService(new TransactionService());
+    TransactionService transactionService = new TransactionService();
+    BankAccountDaoJDBC bankAccountDaoJDBC = new BankAccountDaoJDBC();
+    TransactionDaoJDBC transactionDaoJDBC = new TransactionDaoJDBC();
+    private final CheckingAccountService checkingAccountService = new CheckingAccountService(transactionService, bankAccountDaoJDBC, transactionDaoJDBC);
+    private final SavingAccountService savingAccountService = new SavingAccountService(transactionService, bankAccountDaoJDBC, transactionDaoJDBC);
     private CheckingAccount checkingAccount;
     private SavingAccount savingAccount;
 
     @Before
     public void startup() {
-        checkingAccount = CheckingAccount.builder().accountNumber("5859831180088659").accountHolderNumber("محمد ازقندی")
-                .balance(2000000).overdraftLimit(5000000.0).build();
-        savingAccount = SavingAccount.builder().accountNumber("5859831180088659").accountHolderNumber("محمد ازقندی").
-                balance(20000).MINIMUM_BALANCE(100).minimumBalanceInMonth(100d).MonthlyInterestRate(0.000002f).build();
+//        checkingAccount = CheckingAccount.builder().accountNumber("5859831180088659").accountHolderNumber("محمد ازقندی")
+//                .balance(2000000).overdraftLimit(5000000.0).build();
+//        savingAccount = SavingAccount.builder().accountNumber("5859831180088659").accountHolderNumber("محمد ازقندی").
+//                balance(20000).MINIMUM_BALANCE(100).minimumBalanceInMonth(100d).MonthlyInterestRate(0.000002f).build();
     }
 
     @Test()

@@ -1,5 +1,7 @@
 package services;
 
+import com.java.banksystemproject.dao.impl.JDBC.BankAccountDaoJDBC;
+import com.java.banksystemproject.dao.impl.JDBC.TransactionDaoJDBC;
 import com.java.banksystemproject.model.account.CheckingAccount;
 import com.java.banksystemproject.service.exception.InsufficientFundsException;
 import com.java.banksystemproject.service.exception.InvalidTransactionException;
@@ -11,7 +13,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class CheckingAccountServiceTest {
-    private final CheckingAccountService service = new CheckingAccountService(new TransactionService());
+
+    TransactionService transactionService = new TransactionService();
+    BankAccountDaoJDBC bankAccountDaoJDBC = new BankAccountDaoJDBC();
+    TransactionDaoJDBC transactionDaoJDBC = new TransactionDaoJDBC();
+    private final CheckingAccountService service = new CheckingAccountService(transactionService, bankAccountDaoJDBC, transactionDaoJDBC);
     private CheckingAccount checkingAccount;
 
     @Before
