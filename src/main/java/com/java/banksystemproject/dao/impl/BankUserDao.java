@@ -9,10 +9,10 @@ import javax.persistence.EntityManager;
 import java.util.Optional;
 
 public class BankUserDao implements IBankUserDao {
-    private final EntityManager entityManager = JPAUtil.getEntityManager();
 
     @Override
     public Optional<BankUser> get(String userName) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         Optional<BankUser> user = Optional.empty();
         try {
             entityManager.getTransaction().begin();
@@ -30,6 +30,7 @@ public class BankUserDao implements IBankUserDao {
 
     @Override
     public void save(BankUser user) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(user);
         entityManager.getTransaction().commit();
