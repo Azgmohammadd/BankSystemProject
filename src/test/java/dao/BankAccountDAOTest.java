@@ -2,19 +2,22 @@ package dao;
 
 import com.java.banksystemproject.dao.impl.BankAccountDAO;
 import com.java.banksystemproject.model.account.BankAccount;
+import com.java.banksystemproject.model.account.SavingAccount;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Optional;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertFalse;
 
 public class BankAccountDAOTest {
-    private BankAccount bankAccount;
+    private SavingAccount bankAccount;
     private BankAccountDAO dao;
 
     @Before
     public void startup(){
-        bankAccount = BankAccount.builder().accountNumber("123456").accountHolderNumber("Ali").balance(5000d).build();
+        bankAccount = SavingAccount.builder().accountNumber("123458").accountHolderNumber("Ali3").balance(5000d)
+                .minimumBalanceInMonth(1000).MINIMUM_BALANCE(500).MonthlyInterestRate(0.01d).build();
         dao = new BankAccountDAO();
     }
 

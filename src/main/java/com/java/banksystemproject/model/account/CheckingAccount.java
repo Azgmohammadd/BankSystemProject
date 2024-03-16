@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -12,7 +12,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
+@Entity
+@DiscriminatorValue("Checking")
 public class CheckingAccount extends BankAccount implements Serializable {
+    @Column(name = "overdraft_limit")
     private double overdraftLimit;
 
     public CheckingAccount(String accountNumber, String accountHolderNumber, double overdraftLimit) {
@@ -25,4 +28,5 @@ public class CheckingAccount extends BankAccount implements Serializable {
         this.setOverdraftLimit(overdraftLimit);
     }
 }
+
 
