@@ -18,7 +18,7 @@ public class BankServiceTest {
         bank = new BankDao();
         for (int i = 0; i < 1000; i++)
             bank.save(SavingAccount.builder().accountNumber(String.valueOf(i)).accountHolderNumber(String.valueOf(i))
-                    .balance(1000 + 10 * i).minimumBalanceInMonth(100).MonthlyInterestRate(0.0001f).MINIMUM_BALANCE(10).build());
+                    .balance(1000 + 10 * i).minimumBalanceInMonth(100).monthlyInterestRate(0.0001f).minimumBalance(10).build());
     }
 
     @Test

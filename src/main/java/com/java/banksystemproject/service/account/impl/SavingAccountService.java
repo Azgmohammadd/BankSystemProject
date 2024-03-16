@@ -1,5 +1,7 @@
 package com.java.banksystemproject.service.account.impl;
 
+import com.java.banksystemproject.dao.IBankAccountDao;
+import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.model.Transaction;
@@ -10,8 +12,8 @@ import com.java.banksystemproject.service.exception.InvalidTransactionException;
 import com.java.banksystemproject.service.impl.TransactionService;
 
 public class SavingAccountService extends BankAccountService implements ISavingAccountService {
-    public SavingAccountService(TransactionService transactionService) {
-        super(transactionService);
+    public SavingAccountService(TransactionService transactionService, IBankAccountDao bankAccountDao, ITransactionDao transactionDao) {
+        super(transactionService, bankAccountDao, transactionDao);
     }
 
     @Override
@@ -24,30 +26,36 @@ public class SavingAccountService extends BankAccountService implements ISavingA
 
         if (amount < 0) {
             transaction.setStatus(TransactionStatus.FAILED);
+            transactionDao.save(transaction);
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_NEGATIVE_AMOUNT);
         }
 
         synchronized (lock) {
-            if (savingAccount.getBalance() < amountWithFee + savingAccount.getMINIMUM_BALANCE()) {
+            if (savingAccount.getBalance() < amountWithFee + savingAccount.getMinimumBalance()) {
                 transaction.setStatus(TransactionStatus.FAILED);
+                transactionDao.save(transaction);
                 throw new InvalidTransactionException(ExceptionMessageCodes.BSS_MINIMUM_BALANCE_LIMIT);
             }
-            savingAccount.setBalance(savingAccount.getBalance() - amountWithFee);
+            bankAccountDao.updateBalance(account, account.getBalance() - amountWithFee);
         }
 
         transaction.setStatus(TransactionStatus.DONE);
+        transactionDao.save(transaction);
     }
 
     @Override
     public void applyInterest(SavingAccount account) {
         Transaction transaction = transactionService.createApplyInterestTransaction(account);
-        double interestAmount = (1 + account.getMonthlyInterestRate()) * account.getMinimumBalanceInMonth();
-        synchronized (lock) {
-            account.setBalance(account.getBalance() + interestAmount);
-            account.setMinimumBalanceInMonth(account.getBalance());
-        }
-        transaction.setStatus(TransactionStatus.DONE);
 
+        double interestAmount = (1 + account.getMonthlyInterestRate()) * account.getMinimumBalanceInMonth();
+
+        synchronized (lock) {
+            bankAccountDao.updateBalance(account, account.getBalance() + interestAmount);
+            bankAccountDao.updateMinimumBalance(account, account.getBalance());
+        }
+
+        transaction.setStatus(TransactionStatus.DONE);
+        transactionDao.save(transaction);
     }
 }
 

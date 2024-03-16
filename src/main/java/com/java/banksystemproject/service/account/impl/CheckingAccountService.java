@@ -1,5 +1,7 @@
 package com.java.banksystemproject.service.account.impl;
 
+import com.java.banksystemproject.dao.IBankAccountDao;
+import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.account.CheckingAccount;
 import com.java.banksystemproject.model.Transaction;
@@ -9,9 +11,9 @@ import com.java.banksystemproject.service.exception.InsufficientFundsException;
 import com.java.banksystemproject.service.impl.TransactionService;
 
 public class CheckingAccountService extends BankAccountService {
-    public CheckingAccountService(TransactionService transactionService) {
-        super(transactionService);
-    }
+        public CheckingAccountService(TransactionService transactionService, IBankAccountDao bankAccountDao, ITransactionDao transactionDao) {
+            super(transactionService, bankAccountDao, transactionDao);
+        }
 
     @Override
     public void withdraw(BankAccount account, double amount) {

@@ -1,6 +1,5 @@
 package com.java.banksystemproject.model;
 
-import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.constant.TransactionStatus;
 import com.java.banksystemproject.model.constant.TransactionType;
 import lombok.AllArgsConstructor;
@@ -20,8 +19,8 @@ public class Transaction implements Serializable {
     private TransactionType transactionType;
     private double amount;
     private Date transactionDate;
-    private BankAccount sourceAccount;
-    private BankAccount targetAccount;
+    private String sourceAccountNumber;
+    private String targetAccountNumber;
     @Builder.Default
     private TransactionStatus status = TransactionStatus.PENDING;
     private double fee;
