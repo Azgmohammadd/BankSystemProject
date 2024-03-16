@@ -89,6 +89,13 @@
           <artifactId>HikariCP</artifactId>
           <version>5.0.1</version>
       </dependency>
+
+      <dependency>
+          <groupId>org.mindrot</groupId>
+          <artifactId>jbcrypt</artifactId>
+          <version>0.4</version>
+      </dependency>
+
   </dependencies>
 
   <build>
