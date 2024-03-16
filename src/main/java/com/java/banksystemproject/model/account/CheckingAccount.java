@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -31,4 +28,5 @@ public class CheckingAccount extends BankAccount implements Serializable {
         this.setOverdraftLimit(overdraftLimit);
     }
 }
+
 

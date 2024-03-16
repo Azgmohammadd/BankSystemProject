@@ -26,8 +26,6 @@ public class BankAccount implements Serializable {
     private double balance;
     @Column(name = "account_type", insertable = false, updatable = false)
     private String type;
-    @Column(name = "is_active")
-    private boolean active;
 
     public BankAccount(String accountNumber, String accountHolderNumber) {
         this.setAccountNumber(accountNumber);
@@ -42,3 +40,4 @@ public class BankAccount implements Serializable {
     }
 
 }
+
