@@ -108,7 +108,7 @@ public class BankAccountDaoJDBC implements IBankAccountDao {
                     ps.setString(1, "Saving");
                     ps.setNull(5, Types.DOUBLE);
                     ps.setDouble(6, savingAccount.getMinimumBalance());
-                    ps.setFloat(7, savingAccount.getMonthlyInterestRate());
+                    ps.setDouble(7, savingAccount.getMonthlyInterestRate());
                     ps.setDouble(8, savingAccount.getMinimumBalanceInMonth());
                     ps.setBoolean(9, savingAccount.isActive());
                 } else if (account instanceof CheckingAccount checkingAccount) {

@@ -12,6 +12,8 @@ import com.java.banksystemproject.service.account.IBankAccountService;
 import com.java.banksystemproject.service.impl.TransactionService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 
 @RequiredArgsConstructor
 public class BankAccountService implements IBankAccountService {
@@ -19,6 +21,7 @@ public class BankAccountService implements IBankAccountService {
     protected final IBankAccountDao bankAccountDao;
     protected final ITransactionDao transactionDao;
     protected final Object lock = new Object();
+    private final ReentrantLock reentrantLock = new ReentrantLock();
 
     @Override
     public void deposit(BankAccount account, double amount) {
@@ -70,14 +73,16 @@ public class BankAccountService implements IBankAccountService {
     @Override
     public double getBalance(BankAccount account) {
         Transaction transaction = transactionService.createGetBalanceTransaction(account);
-
-        synchronized (lock) {
+        reentrantLock.lock();
+        try {
             if (account.getBalance() < transaction.getFee()) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
             }
             bankAccountDao.updateBalance(account, account.getBalance() - transaction.getFee());
+        } finally {
+            reentrantLock.unlock();
         }
 
         transaction.setStatus(TransactionStatus.DONE);

@@ -4,7 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Data
@@ -15,10 +18,10 @@ import java.io.Serializable;
 @DiscriminatorValue("Saving")
 public class SavingAccount extends BankAccount implements Serializable {
     @Column(name = "monthly_interest_rate")
-    private double MonthlyInterestRate;
+    private double monthlyInterestRate;
 
     @Column(name = "minimum_balance")
-    private double MINIMUM_BALANCE;
+    private double minimumBalance;
 
     @Column(name = "minimum_balance_in_month")
     private double minimumBalanceInMonth;

@@ -51,8 +51,7 @@ public class AccountServiceThreadSafeTest {
         try {
             depositThread.join();
             withdrawThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         assertEquals(500000d, checkingAccount.getBalance(), 0);
@@ -80,8 +79,7 @@ public class AccountServiceThreadSafeTest {
         try {
             applyInterestThread.join();
             withdrawThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         assertEquals(191293, savingAccount.getBalance(), 1);
     }
