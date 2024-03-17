@@ -22,8 +22,10 @@ public class BankUser implements Serializable {
     @Id
     private String userName;
     private String passWord;//Hash Value
+    @Column(name = "is_admin")
+    private boolean isAdmin;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "bankuser_bankaccount",
             joinColumns = @JoinColumn(name = "bank_user_id"),
             inverseJoinColumns = @JoinColumn(name = "bank_account_id"))

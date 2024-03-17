@@ -33,7 +33,12 @@ public class BankAccount implements Serializable {
     @Column(name = "is_active")
     private boolean active;
 
-    @ManyToMany(mappedBy = "bankAccounts")
+    @ManyToMany
+    @JoinTable(
+            name = "bankuser_bankaccount",
+            joinColumns = @JoinColumn(name = "bank_account_id"),
+            inverseJoinColumns = @JoinColumn(name = "bank_user_id",
+                    nullable = false))
     private Set<BankUser> bankUsers = new HashSet<>();
 
     public BankAccount(String accountNumber, String accountHolderNumber) {
