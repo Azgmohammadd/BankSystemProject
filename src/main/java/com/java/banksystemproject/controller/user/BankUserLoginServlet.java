@@ -18,12 +18,16 @@ public class BankUserLoginServlet extends HttpServlet {
                 .passWord(request.getParameter("password"))
                 .build();
 
-        BankUser authUser = new BankUserServiceFactory().get().authenticate(user);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"message\":\"Log In was successful!\"}");
-
+        try {
+            BankUser authUser = new BankUserServiceFactory().get().authenticate(user);
+            request.setAttribute("messageType", "success");
+            request.setAttribute("messageText", "Login Was Successful!");
+        }
+        catch (IllegalArgumentException e){
+            request.setAttribute("messageType", "error");
+            request.setAttribute("messageText", "Login Was Not Successful!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
     }
 
 }

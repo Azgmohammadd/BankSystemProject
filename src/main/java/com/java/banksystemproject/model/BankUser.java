@@ -22,8 +22,6 @@ public class BankUser implements Serializable {
     @Id
     private String userName;
     private String passWord;//Hash Value
-    @Column(name = "is_admin")
-    private boolean isAdmin;
 
     @ManyToMany
     @JoinTable(name = "bankuser_bankaccount",
