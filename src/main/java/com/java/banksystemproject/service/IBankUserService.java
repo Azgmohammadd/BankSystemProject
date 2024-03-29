@@ -4,8 +4,8 @@ import com.java.banksystemproject.model.BankUser;
 
 public interface IBankUserService {
 
-    void register(String userName, String passWord);
+    void register(BankUser user);
 
-    BankUser authenticate(String userName, String passWord);
+    BankUser authenticate(BankUser user);
 
 }

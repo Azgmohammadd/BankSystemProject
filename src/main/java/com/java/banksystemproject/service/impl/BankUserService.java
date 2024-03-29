@@ -16,26 +16,25 @@ public class BankUserService implements IBankUserService {
     private final IBankUserDao bankUserDao;
 
     @Override
-    public void register(String userName, String passWord) {
-        Optional<BankUser> entity = bankUserDao.get(userName);
+    public void register(BankUser user) {
+        Optional<BankUser> entity = bankUserDao.get(user.getUserName());
 
         if(entity.isPresent())
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_USER_NAME_ALREADY_EXIST);
 
-        String hashedPassword = BCrypt.hashpw(passWord, BCrypt.gensalt());
-        BankUser user = BankUser.builder().userName(userName).passWord(hashedPassword).build();
+        user.setPassWord(BCrypt.hashpw(user.getPassWord(), BCrypt.gensalt()));
         bankUserDao.save(user);
     }
 
     @Override
-    public BankUser authenticate(String userName, String passWord) {
-        Optional<BankUser> user = bankUserDao.get(userName);
+    public BankUser authenticate(BankUser user){
+        Optional<BankUser> entity = bankUserDao.get(user.getUserName());
 
-        if(user.isEmpty())
+        if(entity.isEmpty())
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_USER_NOT_EXIST);
 
-        if(BCrypt.checkpw(passWord, user.get().getPassWord()))
-            return user.get();
+        if(BCrypt.checkpw(user.getPassWord(), entity.get().getPassWord()))
+            return entity.get();
 
         throw new IllegalArgumentException(ExceptionMessageCodes.BSS_USER_NOT_EXIST);
     }
