@@ -1,32 +1,48 @@
 package com.java.banksystemproject.controller.user;
 
-import com.java.banksystemproject.model.BankUser;
-import com.java.banksystemproject.service.factory.BankUserServiceFactory;
+import com.java.banksystemproject.dao.impl.JDBC.BankUserDaoJDBC;
+import com.java.banksystemproject.dao.impl.JDBC.TokenDaoJDBC;
+import com.java.banksystemproject.model.authentication.AuthenticationRequest;
+import com.java.banksystemproject.model.authentication.AuthenticationResponse;
+import com.java.banksystemproject.service.impl.AuthenticationService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+@WebServlet(name = "BankUserLoginServlet", value = "/login")
 public class BankUserLoginServlet extends HttpServlet {
+    private final AuthenticationService authenticationService = new AuthenticationService(new BankUserDaoJDBC(), new TokenDaoJDBC());
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BankUser user = BankUser.builder()
-                .userName(request.getParameter("username"))
-                .passWord(request.getParameter("password"))
+        AuthenticationRequest user =AuthenticationRequest.builder()
+                .username(request.getParameter("username"))
+                .password(request.getParameter("password"))
                 .build();
 
         try {
-            BankUser authUser = new BankUserServiceFactory().get().authenticate(user);
+            AuthenticationResponse authResponse = authenticationService.authenticate(user);
+            HttpSession session = request.getSession(true); // create session if it doesn't exist
+            session.setAttribute("user", user);
+
             request.setAttribute("messageType", "success");
             request.setAttribute("messageText", "Login Was Successful!");
+            request.setAttribute("token", authResponse.getAccessToken());
+            response.sendRedirect(request.getContextPath() + "/home");
         }
         catch (IllegalArgumentException e){
             request.setAttribute("messageType", "error");
             request.setAttribute("messageText", "Login Was Not Successful!");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.html").forward(request, response);
         }
     }
 
