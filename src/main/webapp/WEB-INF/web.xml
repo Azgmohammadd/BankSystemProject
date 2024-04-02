@@ -5,27 +5,6 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
-    <!-- BankUserLoginServlet -->
-    <servlet>
-        <servlet-name>BankUserLoginServlet</servlet-name>
-        <servlet-class>com.java.banksystemproject.controller.user.BankUserLoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BankUserLoginServlet</servlet-name>
-        <url-pattern>/BankUserLoginServlet</url-pattern>
-    </servlet-mapping>
-
-    <!-- BankUserRegisterServlet -->
-    <servlet>
-        <servlet-name>BankUserRegisterServlet</servlet-name>
-        <servlet-class>com.java.banksystemproject.controller.user.BankUserRegisterServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BankUserRegisterServlet</servlet-name>
-        <url-pattern>/BankUserRegisterServlet</url-pattern>
-    </servlet-mapping>
-
 </web-app>
