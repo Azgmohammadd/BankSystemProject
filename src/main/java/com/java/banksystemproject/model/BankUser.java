@@ -26,6 +26,12 @@ public class BankUser implements Serializable {
 
     private String password;//Hash Value
 
+    private String firstName;
+
+    private String lastName;
+
+    private String nationalCode;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role role =Role.USER;
@@ -34,5 +40,5 @@ public class BankUser implements Serializable {
     @JoinTable(name = "bankuser_bankaccount",
             joinColumns = @JoinColumn(name = "bank_user_id"),
             inverseJoinColumns = @JoinColumn(name = "bank_account_id"))
-    private Set<BankAccount> bankAccounts = new HashSet<>();
+    private Set<String> bankAccountsId = new HashSet<>();
 }
