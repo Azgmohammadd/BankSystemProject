@@ -12,7 +12,7 @@ public class SavingAccountServiceFactory {
 
     public ISavingAccountService get(){
         return new SavingAccountService(
-                new TransactionService(),
+                new TransactionService(new TransactionDaoJDBC()),
                 new BankAccountDao(),
                 new TransactionDao()
         );
@@ -20,7 +20,7 @@ public class SavingAccountServiceFactory {
 
     public ISavingAccountService getJDBC(){
         return new SavingAccountService(
-                new TransactionService(),
+                new TransactionService(new TransactionDaoJDBC()),
                 new BankAccountDaoJDBC(),
                 new TransactionDaoJDBC()
         );

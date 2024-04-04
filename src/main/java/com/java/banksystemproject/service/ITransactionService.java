@@ -12,4 +12,6 @@ public interface ITransactionService {
     Transaction createGetBalanceTransaction(BankAccount account);
 
     Transaction createApplyInterestTransaction(BankAccount account);
+
+    Transaction get(String transactionID);
 }

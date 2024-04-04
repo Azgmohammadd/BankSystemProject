@@ -17,7 +17,7 @@ public class SavingAccountService extends BankAccountService implements ISavingA
     }
 
     @Override
-    public void withdraw(BankAccount account, double amount) {
+    public Transaction withdraw(BankAccount account, double amount) {
         if (!(account instanceof SavingAccount savingAccount))
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_INCOMPATIBLE_ACCOUNT_TYPE);
 
@@ -41,6 +41,7 @@ public class SavingAccountService extends BankAccountService implements ISavingA
 
         transaction.setStatus(TransactionStatus.DONE);
         transactionDao.save(transaction);
+        return transaction;
     }
 
     @Override

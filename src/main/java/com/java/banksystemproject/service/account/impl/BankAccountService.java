@@ -24,7 +24,7 @@ public class BankAccountService implements IBankAccountService {
     private final ReentrantLock reentrantLock = new ReentrantLock();
 
     @Override
-    public void deposit(BankAccount account, double amount) {
+    public Transaction deposit(BankAccount account, double amount) {
         Transaction transaction = transactionService.createDepositTransaction(account, amount);
 
         if (amount < 0) {
@@ -44,10 +44,12 @@ public class BankAccountService implements IBankAccountService {
 
         transaction.setStatus(TransactionStatus.DONE);
         transactionDao.save(transaction);
+
+        return transaction;
     }
 
     @Override
-    public void withdraw(BankAccount account, double amount) {
+    public Transaction withdraw(BankAccount account, double amount) {
         Transaction transaction = transactionService.createWithdrawTransaction(account, amount);
         double amountWithFee = transaction.getAmount() + transaction.getFee();
 
@@ -68,10 +70,12 @@ public class BankAccountService implements IBankAccountService {
 
         transaction.setStatus(TransactionStatus.DONE);
         transactionDao.save(transaction);
+
+        return transaction;
     }
 
     @Override
-    public double getBalance(BankAccount account) {
+    public Transaction getBalance(BankAccount account) {
         Transaction transaction = transactionService.createGetBalanceTransaction(account);
         reentrantLock.lock();
         try {
@@ -88,7 +92,7 @@ public class BankAccountService implements IBankAccountService {
         transaction.setStatus(TransactionStatus.DONE);
         transactionDao.save(transaction);
 
-        return account.getBalance();
+        return transaction;
     }
 }
 

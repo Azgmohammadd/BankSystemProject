@@ -1,11 +1,16 @@
 package com.java.banksystemproject.service;
 
 import com.java.banksystemproject.model.BankUser;
+import com.java.banksystemproject.model.account.BankAccount;
+
+import java.util.List;
 
 public interface IBankUserService {
+    BankUser get(String username);
 
-    void register(BankUser user);
+    List<BankUser> getAllUsers();
 
-    BankUser authenticate(BankUser user);
+    void save(BankUser bankUser);
 
+    List<BankAccount> getAllAccounts(BankUser bankUser);
 }
