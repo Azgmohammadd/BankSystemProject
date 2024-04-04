@@ -75,7 +75,7 @@ public class TransactionDaoJDBC implements ITransactionDao {
     @Override
     public void save(Transaction transaction) {
         try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO TRANSACTIONS(TRANSACTION_TYPE, AMOUNT, TRANSACTION_DATE, SOURCE_ACCOUNT_NUMBER, TARGET_ACCOUNT_NUMBER, STATUS, FEE) VALUES(?, ?, ?, ?, ?, ?, ?)")) {
+            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO TRANSACTIONS(TRANSACTION_TYPE, AMOUNT, TRANSACTION_DATE, SOURCE_ACCOUNT_NUMBER, TARGET_ACCOUNT_NUMBER, STATUS, FEE, TRANSACTION_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")) {
                 ps.setString(1, transaction.getTransactionType().name());
                 ps.setDouble(2, transaction.getAmount());
                 java.util.Date utilDate = transaction.getTransactionDate();
@@ -85,6 +85,7 @@ public class TransactionDaoJDBC implements ITransactionDao {
                 ps.setString(5, transaction.getTargetAccountNumber());
                 ps.setString(6, transaction.getStatus().name());
                 ps.setDouble(7, transaction.getFee());
+                ps.setLong(8, transaction.getTransactionId());
 
                 ps.executeUpdate();
             }

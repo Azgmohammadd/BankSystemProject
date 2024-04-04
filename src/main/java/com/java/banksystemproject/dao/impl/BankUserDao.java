@@ -2,13 +2,18 @@ package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.IBankUserDao;
 import com.java.banksystemproject.model.BankUser;
-import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.util.impl.JPAUtil;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
 public class BankUserDao implements IBankUserDao {
+
+    @Override
+    public List<BankUser> getAll() {
+        return null;
+    }
 
     @Override
     public Optional<BankUser> get(String userName) {
