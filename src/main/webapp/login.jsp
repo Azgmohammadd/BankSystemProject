@@ -22,7 +22,6 @@
                     <div class="col-md-8">
                         <div class="mb-4 d-flex justify-content-center">
                             <h3>Sign In</h3>
-<%--                            <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>--%>
                         </div>
                         <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
                             <div id="messageContainer"></div>
