@@ -1,11 +1,10 @@
 package com.java.banksystemproject.controller.user;
 
-import com.java.banksystemproject.dao.impl.JDBC.BankUserDaoJDBC;
-import com.java.banksystemproject.dao.impl.JDBC.TokenDaoJDBC;
 import com.java.banksystemproject.model.authentication.AuthenticationResponse;
 import com.java.banksystemproject.model.authentication.RegisterRequest;
 import com.java.banksystemproject.model.constant.Role;
-import com.java.banksystemproject.service.impl.AuthenticationService;
+import com.java.banksystemproject.service.IAuthenticationService;
+import com.java.banksystemproject.service.factory.AuthenticationServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet(name = "BankUserRegisterServlet", value = "/register")
 public class BankUserRegisterServlet extends HttpServlet {
-    private final AuthenticationService authenticationService = new AuthenticationService(new BankUserDaoJDBC(), new TokenDaoJDBC());
+    private final IAuthenticationService authenticationService = new AuthenticationServiceFactory().getJDBC();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getRequestDispatcher("/register.jsp").forward(request, response);

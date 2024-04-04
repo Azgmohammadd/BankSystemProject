@@ -1,8 +1,7 @@
 package com.java.banksystemproject.controller.user;
 
-import com.java.banksystemproject.dao.impl.JDBC.BankUserDaoJDBC;
-import com.java.banksystemproject.dao.impl.JDBC.TokenDaoJDBC;
-import com.java.banksystemproject.service.impl.AuthenticationService;
+import com.java.banksystemproject.service.IAuthenticationService;
+import com.java.banksystemproject.service.factory.AuthenticationServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "BankUserLogutServlet", value = "/logout")
 
 public class BankUserLogoutServlet extends HttpServlet {
-    private final AuthenticationService authenticationService = new AuthenticationService(new BankUserDaoJDBC(), new TokenDaoJDBC());
+    private final IAuthenticationService authenticationService = new AuthenticationServiceFactory().getJDBC();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
