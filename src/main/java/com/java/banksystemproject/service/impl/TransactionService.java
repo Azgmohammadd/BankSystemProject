@@ -8,6 +8,7 @@ import com.java.banksystemproject.service.ITransactionService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -74,5 +75,10 @@ public class TransactionService implements ITransactionService {
         Optional<Transaction> transaction = transactionDao.get(Long.parseLong(transactionID));
 
         return transaction.orElse(null);
+    }
+
+    @Override
+    public List<Transaction> getAll() {
+        return (List<Transaction>) transactionDao.getAll();
     }
 }

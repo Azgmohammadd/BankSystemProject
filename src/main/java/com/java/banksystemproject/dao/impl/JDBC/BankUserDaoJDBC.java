@@ -16,7 +16,7 @@ public class BankUserDaoJDBC implements IBankUserDao {
     public List<BankUser> getAll() {
         try(Connection conn = dataSource.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM BANK_USER")) {
-                List<BankUser> users = new ArrayList<>();
+                Map<String, BankUser> map = new HashMap<>();
 
                 ResultSet resultSet = ps.executeQuery();
                 while (resultSet.next()) {
@@ -29,17 +29,21 @@ public class BankUserDaoJDBC implements IBankUserDao {
                             .bankAccountsId(new HashSet<>())
                             .build();
 
-                    String bankAccountIdsString = resultSet.getString("BANK_ACCOUNT_ID");
+                    String bankAccountIdString = resultSet.getString("BANK_ACCOUNT_ID");
 
-                    if (bankAccountIdsString != null && !bankAccountIdsString.isEmpty()) {
-                        String[] bankAccountIdsArray = bankAccountIdsString.split(",");
-                        user.getBankAccountsId().addAll(Arrays.asList(bankAccountIdsArray));
+                    if (map.containsKey(user.getUsername())) {
+                        BankUser _user = map.get(user.getUsername());
+                        Set<String> bankAccountsId = new HashSet<>(_user.getBankAccountsId());
+                        bankAccountsId.add(bankAccountIdString);
+                        _user.setBankAccountsId(bankAccountsId);
+                        map.put(_user.getUsername(), _user);
+                    } else {
+                        user.setBankAccountsId(Set.of(bankAccountIdString));
+                        map.put(user.getUsername(), user);
                     }
-
-                    users.add(user);
                 }
 
-                return users;
+                return map.values().stream().toList();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
