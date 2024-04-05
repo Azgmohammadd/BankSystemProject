@@ -25,7 +25,9 @@ public class AuthenticationService implements IAuthenticationService {
                 .username(request.getUsername())
                 .password(PasswordEncoder.encodePassword(request.getPassword()))
                 .role(request.getRole())
-                //TODO: add bankAccounts
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .nationalCode(request.getNationalCode())
                 .build();
 
         userDao.save(user);

@@ -27,6 +27,9 @@ public class BankUserRegisterServlet extends HttpServlet {
                 .username(request.getParameter("username"))
                 .password(request.getParameter("password"))
                 .role(Role.USER)
+                .firstName(request.getParameter("firstName"))
+                .lastName(request.getParameter("lastName"))
+                .nationalCode(request.getParameter("nationalCode"))
                 .build();
 
         try {

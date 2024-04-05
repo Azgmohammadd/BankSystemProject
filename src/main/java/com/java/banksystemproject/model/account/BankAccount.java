@@ -2,7 +2,6 @@ package com.java.banksystemproject.model.account;
 
 import javax.persistence.*;
 
-import com.java.banksystemproject.model.BankUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "bank_account")
@@ -47,7 +44,6 @@ public class BankAccount implements Serializable {
         this.setAccountHolderNumber(accountHolderNumber);
         this.setBalance(initialAmount);
         this.setActive(true);
-
     }
 
 }

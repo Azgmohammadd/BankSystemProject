@@ -94,5 +94,14 @@ public class BankAccountService implements IBankAccountService {
 
         return transaction;
     }
+
+    @Override
+    public void create(BankAccount bankAccount) {
+        try {
+            bankAccountDao.save(bankAccount);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 

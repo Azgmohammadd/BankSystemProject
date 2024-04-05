@@ -63,4 +63,13 @@ public class BankUserService implements IBankUserService {
         }
         return null;
     }
+
+    @Override
+    public void addAccount(BankUser bankUser, BankAccount bankAccount) {
+        try {
+            bankUserDao.addAccount(bankUser, bankAccount);
+        } catch (Exception e ){
+            e.printStackTrace();
+        }
+    }
 }

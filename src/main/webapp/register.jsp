@@ -20,9 +20,8 @@
             <div class="col-md-6 contents">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <div class="mb-4 d-flex justify-content-center">
+                        <div class="mb-4 text-center">
                             <h3>Register</h3>
-                            <%--                            <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>--%>
                         </div>
                         <form id="RegisterForm" action="${pageContext.request.contextPath}/register" method="post">
                             <div id="messageContainer"></div>
@@ -35,15 +34,26 @@
                                 <label for="password" class="label">Password</label>
                                 <input type="password" id="password" name="password" class="form-control" />
                             </div>
-                            <%--                            <div class="d-flex mb-5 align-items-center">--%>
-                            <%--                                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>--%>
-                            <%--                                    <input type="checkbox" checked="checked">--%>
-                            <%--                                    <div class="control__indicator"></div>--%>
-                            <%--                                </label>--%>
-                            <%--                                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>--%>
-                            <%--                            </div>--%>
+
+                            <div class="form-group last mb-4">
+                                <label for="firstName" class="label">First Name</label>
+                                <input type="text" id="firstName" name="firstName" class="form-control" />
+                            </div>
+
+                            <div class="form-group last mb-4">
+                                <label for="lastName" class="label">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" class="form-control" />
+                            </div>
+
+                            <div class="form-group last mb-4">
+                                <label for="nationalCode" class="label">National Code</label>
+                                <input type="text" id="nationalCode" name="nationalCode" class="form-control" />
+                            </div>
                             <input type="submit" value="Register" class="btn btn-block btn-warning">
                         </form>
+                        <div class="col-12 my-4">
+                            <a href="${pageContext.request.contextPath}/login" class="text-primary my-3">Login</a>
+                        </div>
                     </div>
                 </div>
             </div>

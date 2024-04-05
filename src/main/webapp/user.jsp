@@ -17,12 +17,16 @@
         <script src="js/script.js"></script>
     </head>
     <body>
-    <div class="container py-2 my-2">
-        <h4 class="display-4"><c:out value="${username} accounts" /></h4>
-        <section>
-            <div class="row">
-                <c:forEach var="account" items="${accounts}">
-                    <div class="col-md-4 card p-0 my-3">
+        <div class="container py-2 my-2">
+            <h4 class="display-4"><c:out value="${username} accounts" /></h4>
+            <c:if test="${empty accounts}">
+                <a href="${pageContext.request.contextPath}/accounts?username=${username}" class="text-muted">Create an account</a>
+
+            </c:if>
+            <section>
+                <div class="row">
+                    <c:forEach var="account" items="${accounts}">
+                        <div class="col-md-4 card p-0 my-3">
                             <div class="card-header">${account.accountNumber}</div>
                             <div class="card-body">
                                 <div class="card-title">${account.accountHolderNumber}</div>
@@ -39,8 +43,8 @@
                 </div>
             </section>
 
-        <!-- Hidden field to store selected account number -->
-        <input type="hidden" id="selectedAccountNumber" name="selectedAccountNumber" value="" />
+            <!-- Hidden field to store selected account number -->
+            <input type="hidden" id="selectedAccountNumber" name="selectedAccountNumber" value="" />
 
             <!-- Detail Popup -->
             <div class="modal fade" id="detailPopup" tabindex="-1" role="dialog" aria-labelledby="detailPopupLabel" aria-hidden="true">
@@ -87,8 +91,8 @@
                                             <form action="${pageContext.request.contextPath}/transaction/deposit" method="post">
                                                 <div class="form-group">
                                                     <label for="depositInput">Amount</label>
-                                                    <input type="text" class="form-control" id="depositInput" name="amount" placeholder="Enter amount">
-                                                    <input type="hidden" class="hidden_acc_id" name="selectedAccountNumber" value="${account.accountNumber}" />
+                                                        <input type="text" class="form-control" id="depositInput" name="amount" placeholder="Enter amount">
+                                                        <input type="hidden" class="hidden_acc_id" name="selectedAccountNumber" value="${account.accountNumber}" />
                                                 </div>
                                                 <input type="submit" class="btn btn-success btn-block" value="Submit" />
                                             </form>

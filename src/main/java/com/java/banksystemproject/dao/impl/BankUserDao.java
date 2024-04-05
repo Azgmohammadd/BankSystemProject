@@ -2,6 +2,7 @@ package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.IBankUserDao;
 import com.java.banksystemproject.model.BankUser;
+import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.util.impl.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -40,6 +41,11 @@ public class BankUserDao implements IBankUserDao {
         entityManager.persist(user);
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    @Override
+    public void addAccount(BankUser bankUser, BankAccount bankAccount) {
+        //
     }
 
 }

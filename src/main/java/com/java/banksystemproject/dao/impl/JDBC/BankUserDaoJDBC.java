@@ -2,6 +2,7 @@ package com.java.banksystemproject.dao.impl.JDBC;
 
 import com.java.banksystemproject.dao.IBankUserDao;
 import com.java.banksystemproject.model.BankUser;
+import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.constant.Role;
 import com.java.banksystemproject.util.impl.JDBCUtil;
 
@@ -29,7 +30,7 @@ public class BankUserDaoJDBC implements IBankUserDao {
                             .bankAccountsId(new HashSet<>())
                             .build();
 
-                    String bankAccountIdString = resultSet.getString("BANK_ACCOUNT_ID");
+                    String bankAccountIdString = resultSet.getString("BANK_ACCOUNT_ID") == null ? "" :resultSet.getString("BANK_ACCOUNT_ID");
 
                     if (map.containsKey(user.getUsername())) {
                         BankUser _user = map.get(user.getUsername());
@@ -73,9 +74,12 @@ public class BankUserDaoJDBC implements IBankUserDao {
                             .build();
                     bankAccountsId.add(resultSet.getString("BANK_ACCOUNT_ID"));
                 }
-                user.setBankAccountsId(bankAccountsId);
 
-                return Optional.of(user);
+                if (user != null) {
+                    user.setBankAccountsId(bankAccountsId);
+                }
+
+                return Optional.ofNullable(user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -94,14 +98,33 @@ public class BankUserDaoJDBC implements IBankUserDao {
                 ps.setString(5, user.getLastName());
                 ps.setString(6, user.getNationalCode());
 
-                for (String accString: user.getBankAccountsId()) {
-                    ps.setString(7, accString);
-
+                if (user.getBankAccountsId() == null || user.getBankAccountsId().isEmpty()) {
+                    ps.setNull(7, Types.VARCHAR);
                     ps.executeUpdate();
+                }else {
+                    for (String accString : user.getBankAccountsId()) {
+                        ps.setString(7, accString);
+
+                    }
                 }
             }
         }
         catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addAccount(BankUser bankUser, BankAccount bankAccount) {
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE BANK_USER SET BANK_ACCOUNT_ID = ? WHERE USERNAME = ?")) { //incorrect
+                ps.setString(1, bankAccount.getAccountNumber());
+
+                ps.setString(2, bankUser.getUsername());
+
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

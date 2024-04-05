@@ -19,7 +19,7 @@ public class UserServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
-        request.setAttribute("username", request.getParameter("username"));
+        request.setAttribute("username", username);
 
         BankUser bankUser = bankUserService.get(username);
         request.setAttribute("user", bankUser);

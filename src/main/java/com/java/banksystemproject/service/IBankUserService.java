@@ -13,4 +13,6 @@ public interface IBankUserService {
     void save(BankUser bankUser);
 
     List<BankAccount> getAllAccounts(BankUser bankUser);
+
+    void addAccount(BankUser bankUser, BankAccount bankAccount);
 }

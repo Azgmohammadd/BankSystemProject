@@ -7,4 +7,6 @@ public interface IBankAccountService {
     Transaction deposit(BankAccount account, double amount);
     Transaction withdraw(BankAccount account, double amount);
     Transaction getBalance(BankAccount account);
+
+    void create(BankAccount bankAccount);
 }
