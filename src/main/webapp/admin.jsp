@@ -6,7 +6,6 @@
         <base href="/BankSystemProject/" target="_blank" />
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <script src="js/jquery-3.6.0.min.js" />
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
@@ -17,9 +16,10 @@
                     <h4 class="display-4">All Accounts</h4>
                 </div>
             </div>
+            <div class="row">
+
             <c:forEach var="user" items="${users}">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <div class="card my-3 p-0">
                             <div class="card-header">
                                 <p class="card-title">Username:
@@ -53,8 +53,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </c:forEach>
+            </div>
         </div>
     </body>
 </html>

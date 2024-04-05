@@ -1,9 +1,10 @@
 package com.java.banksystemproject.controller.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.java.banksystemproject.dao.impl.JDBC.TransactionDaoJDBC;
 import com.java.banksystemproject.model.Transaction;
-import com.java.banksystemproject.model.constant.TransactionStatus;
-import com.java.banksystemproject.model.constant.TransactionType;
+import com.java.banksystemproject.service.ITransactionService;
+import com.java.banksystemproject.service.impl.TransactionService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +18,9 @@ import java.util.List;
 
 @WebServlet("/accountTransactions")
 public class AccountTransactionsServlet extends HttpServlet {
+    private final ITransactionService transactionService = new TransactionService(new TransactionDaoJDBC());
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: use transaction service
-        List<Transaction> transactions = List.of(Transaction.builder()
-                .transactionType(TransactionType.DEPOSITS)
-                .transactionDate(new Date())
-                .amount(220000).transactionId(123)
-                .fee(200)
-                .status(TransactionStatus.DONE)
-                .sourceAccountNumber("123333")
-                .build());
+        List<Transaction> transactions = transactionService.getAll();
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonTransactions = objectMapper.writeValueAsString(transactions);
