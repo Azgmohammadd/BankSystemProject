@@ -1,11 +1,17 @@
 package com.java.banksystemproject.util.impl;
 
+import com.java.banksystemproject.service.account.impl.BankAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesFileUtil {
+    private static final Logger logger = LoggerFactory.getLogger(BankAccountService.class);
+
     public static Properties getProperties(String filePath) {
         Properties prop = new Properties();
 
@@ -13,7 +19,7 @@ public class PropertiesFileUtil {
             prop.load(input);
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage());
         }
 
         return prop;

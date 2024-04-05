@@ -30,8 +30,7 @@
                                     <input type="text" id="accountNumber" name="accountNumber" class="form-control"/>
                                 </div>
                                 <div class="form-group last mb-4">
-                                    <label for="accountHolderNumber" class="label">Account Holder Number</label>
-                                    <input type="text" id="accountHolderNumber" name="accountHolderNumber" class="form-control" />
+                                    <input type="hidden" id="accountHolderNumber" name="accountHolderNumber" class="form-control" value="${username}" />
                                 </div>
 
                                 <div class="form-group last mb-4">

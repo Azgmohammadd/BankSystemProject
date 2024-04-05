@@ -6,13 +6,16 @@ import com.java.banksystemproject.dao.IBankUserDao;
 import com.java.banksystemproject.model.BankUser;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.service.IBankUserService;
+import com.java.banksystemproject.service.account.impl.BankAccountService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class BankUserService implements IBankUserService {
-
+    private static final Logger logger = LoggerFactory.getLogger(BankAccountService.class);
     private final IBankUserDao bankUserDao;
     private final IBankAccountDao bankAccountDao;
 
@@ -26,7 +29,7 @@ public class BankUserService implements IBankUserService {
             }
             return bankUser.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -34,11 +37,9 @@ public class BankUserService implements IBankUserService {
     @Override
     public List<BankUser> getAllUsers() {
         try {
-            List<BankUser> users = bankUserDao.getAll();
-
-            return users;
+            return bankUserDao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -48,7 +49,7 @@ public class BankUserService implements IBankUserService {
         try {
             bankUserDao.save(bankUser);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -59,7 +60,7 @@ public class BankUserService implements IBankUserService {
                     .filter(account -> bankUser.getBankAccountsId().contains(account.getAccountNumber()))
                     .toList();
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -69,7 +70,7 @@ public class BankUserService implements IBankUserService {
         try {
             bankUserDao.addAccount(bankUser, bankAccount);
         } catch (Exception e ){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }
