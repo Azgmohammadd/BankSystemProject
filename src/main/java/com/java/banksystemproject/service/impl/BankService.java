@@ -19,10 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @RequiredArgsConstructor
 public class BankService {
-    private static TransactionService transactionService;
     private static IBankAccountDao bankAccountDao;
-    private static ITransactionDao transactionDao;
-
     //Multithreading
     public static BigDecimal calculateBankTotalBalance(BankDao bank) {
         AtomicReference<BigDecimal> totalBalance = new AtomicReference<>(BigDecimal.ZERO);

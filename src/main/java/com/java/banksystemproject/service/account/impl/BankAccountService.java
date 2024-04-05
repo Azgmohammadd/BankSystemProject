@@ -11,12 +11,15 @@ import com.java.banksystemproject.service.account.IBankAccountService;
 
 import com.java.banksystemproject.service.impl.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 
 @RequiredArgsConstructor
 public class BankAccountService implements IBankAccountService {
+    private static final Logger logger = LoggerFactory.getLogger(BankAccountService.class);
     protected final TransactionService transactionService;
     protected final IBankAccountDao bankAccountDao;
     protected final ITransactionDao transactionDao;
@@ -100,7 +103,7 @@ public class BankAccountService implements IBankAccountService {
         try {
             bankAccountDao.save(bankAccount);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

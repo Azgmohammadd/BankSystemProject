@@ -12,7 +12,7 @@ public class JDBCUtil {
     private final static String password;
 
     static {
-        String path = System.getProperty("user.dir") + "/src/main/resources/application.properties"; //incorrect
+        String path = System.getProperty("user.dir") + "/src/main/resources/application.properties"; //it doesn't work
         Properties properties = PropertiesFileUtil.getProperties(path);
         url = properties.getProperty("datasource.url");
         driverName = properties.getProperty("datasource.driverName");

@@ -9,6 +9,12 @@
 </head>
 <body>
     <%@include file="header.jsp"%>
+    <p>
+        <a href="${pageContext.request.contextPath}/user" class="">User Page</a>
+    </p>
+    <p>
+        <a href="${pageContext.request.contextPath}/admin" class="">Admin Page</a>
+    </p>
     <%@include file="footer.jsp"%>
 </body>
 </html>
