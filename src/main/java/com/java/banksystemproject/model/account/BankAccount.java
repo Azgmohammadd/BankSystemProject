@@ -1,7 +1,9 @@
 package com.java.banksystemproject.model.account;
 
 import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -27,18 +29,21 @@ public class BankAccount implements Serializable {
     @Column(name = "account_type", insertable = false, updatable = false)
     private String type;
     @Column(name = "is_active")
-    private boolean active;
+    @Builder.Default
+    private boolean active = true;
 
     public BankAccount(String accountNumber, String accountHolderNumber) {
         this.setAccountNumber(accountNumber);
         this.setAccountHolderNumber(accountHolderNumber);
         this.setBalance(0);
+        this.setActive(true);
     }
 
     public BankAccount(String accountNumber, String accountHolderNumber, double initialAmount) {
-        this.accountNumber = accountNumber;
-        this.accountHolderNumber = accountHolderNumber;
-        this.balance = initialAmount;
+        this.setAccountNumber(accountNumber);
+        this.setAccountHolderNumber(accountHolderNumber);
+        this.setBalance(initialAmount);
+        this.setActive(true);
     }
 
 }

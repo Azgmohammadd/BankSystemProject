@@ -12,7 +12,7 @@ public class CheckingAccountServiceFactory {
 
     public IBankAccountService get(){
         return new CheckingAccountService(
-                new TransactionService(),
+                new TransactionService(new TransactionDaoJDBC()),
                 new BankAccountDao(),
                 new TransactionDao()
         );
@@ -20,7 +20,7 @@ public class CheckingAccountServiceFactory {
 
     public IBankAccountService getJDBC() {
         return new CheckingAccountService(
-                new TransactionService(),
+                new TransactionService(new TransactionDaoJDBC()),
                 new BankAccountDaoJDBC(),
                 new TransactionDaoJDBC()
         );

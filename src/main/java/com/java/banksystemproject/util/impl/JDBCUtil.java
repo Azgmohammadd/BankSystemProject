@@ -12,7 +12,8 @@ public class JDBCUtil {
     private final static String password;
 
     static {
-        Properties properties = PropertiesFileUtil.getProperties("src/main/resources/application.properties");
+        String path = System.getProperty("user.dir") + "/src/main/resources/application.properties"; //incorrect
+        Properties properties = PropertiesFileUtil.getProperties(path);
         url = properties.getProperty("datasource.url");
         driverName = properties.getProperty("datasource.driverName");
         username = properties.getProperty("datasource.username", null);
@@ -21,9 +22,8 @@ public class JDBCUtil {
 
     public static DataSource createDataSource() {
         HikariDataSource ds = new HikariDataSource();
-        ds.setJdbcUrl(url);
-//        ds.setUsername(username);
-//        ds.setPassword(password);
+        ds.setJdbcUrl("jdbc:h2:mem:default;INIT=RUNSCRIPT FROM 'classpath:scheme.sql';"); //incorrect way
+        ds.setDriverClassName("org.h2.Driver");
 
         return ds;
     }

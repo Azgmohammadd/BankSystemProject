@@ -16,7 +16,7 @@ public class CheckingAccountService extends BankAccountService {
         }
 
     @Override
-    public void withdraw(BankAccount account, double amount) {
+    public Transaction withdraw(BankAccount account, double amount) {
         if(!(account instanceof CheckingAccount checkingAccount))
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_INCOMPATIBLE_ACCOUNT_TYPE);
 
@@ -37,6 +37,7 @@ public class CheckingAccountService extends BankAccountService {
         }
 
         transaction.setStatus(TransactionStatus.DONE);
+        return transaction;
     }
 }
 

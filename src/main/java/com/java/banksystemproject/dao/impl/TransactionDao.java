@@ -2,7 +2,6 @@ package com.java.banksystemproject.dao.impl;
 
 import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.model.Transaction;
-import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.util.impl.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -10,10 +9,10 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class TransactionDao implements ITransactionDao {
-    private final EntityManager entityManager = JPAUtil.getEntityManager();
 
     @Override
     public Optional<Transaction> get(long id) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         Optional<Transaction> transaction = Optional.empty();
         try {
             entityManager.getTransaction().begin();
@@ -36,6 +35,7 @@ public class TransactionDao implements ITransactionDao {
 
     @Override
     public void save(Transaction transaction) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(transaction);
         entityManager.getTransaction().commit();
@@ -44,6 +44,7 @@ public class TransactionDao implements ITransactionDao {
 
     @Override
     public void delete(Transaction transaction) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
 
         Transaction entity = entityManager.find(Transaction.class, transaction.getTransactionId());

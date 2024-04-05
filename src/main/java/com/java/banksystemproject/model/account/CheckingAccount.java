@@ -24,11 +24,13 @@ public class CheckingAccount extends BankAccount implements Serializable {
     public CheckingAccount(String accountNumber, String accountHolderNumber, double overdraftLimit) {
         super(accountNumber, accountHolderNumber);
         this.setOverdraftLimit(overdraftLimit);
+        this.setType("Checking");
     }
 
     public CheckingAccount(String accountNumber, String accountHolderNumber, double initialAmount, double overdraftLimit) {
         super(accountNumber, accountHolderNumber, initialAmount);
         this.setOverdraftLimit(overdraftLimit);
+        this.setType("Checking");
     }
 }
 

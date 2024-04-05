@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class BankAccountDao implements IBankAccountDao {
-    private final EntityManager entityManager = JPAUtil.getEntityManager();
 
     @Override
     public Optional<BankAccount> get(String accountNumber) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         Optional<BankAccount> account = Optional.empty();
         try {
             entityManager.getTransaction().begin();
@@ -35,6 +35,7 @@ public class BankAccountDao implements IBankAccountDao {
     }
 
     public void save(BankAccount account) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(account);
         entityManager.getTransaction().commit();
@@ -43,6 +44,7 @@ public class BankAccountDao implements IBankAccountDao {
 
     @Override
     public void delete(BankAccount bankAccount) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
 
         BankAccount account = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
@@ -56,6 +58,7 @@ public class BankAccountDao implements IBankAccountDao {
 
     @Override
     public void updateBalance(BankAccount account, double amount) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
 
         BankAccount entity = entityManager.find(BankAccount.class, account.getAccountNumber());
@@ -70,6 +73,7 @@ public class BankAccountDao implements IBankAccountDao {
 
     @Override
     public void updateMinimumBalance(SavingAccount account, double amount) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
 
         SavingAccount entity = entityManager.find(SavingAccount.class, account.getAccountNumber());

@@ -26,12 +26,12 @@
           <scope>test</scope>
       </dependency>
 
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>5.0.0</version>
-      <scope>provided</scope>
-    </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>4.0.1</version>
+          <scope>provided</scope>
+      </dependency>
      <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
       <dependency>
           <groupId>jakarta.persistence</groupId>
@@ -88,6 +88,64 @@
           <groupId>com.zaxxer</groupId>
           <artifactId>HikariCP</artifactId>
           <version>5.0.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.mindrot</groupId>
+          <artifactId>jbcrypt</artifactId>
+          <version>0.4</version>
+      </dependency>
+      <dependency>
+          <groupId>javax.annotation</groupId>
+          <artifactId>javax.annotation-api</artifactId>
+          <version>1.2</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+      <dependency>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging-api</artifactId>
+          <version>1.1</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>javax.servlet</groupId>
+                  <artifactId>servlet-api</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <version>2.5</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>javax.servlet.jsp</groupId>
+          <artifactId>jsp-api</artifactId>
+          <version>2.1</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>io.jsonwebtoken</groupId>
+          <artifactId>jjwt-api</artifactId>
+          <version>0.11.5</version>
+      </dependency>
+      <dependency>
+          <groupId>io.jsonwebtoken</groupId>
+          <artifactId>jjwt-impl</artifactId>
+          <version>0.11.5</version>
+          <scope>runtime</scope>
+      </dependency>
+      <dependency>
+          <groupId>io.jsonwebtoken</groupId>
+          <artifactId>jjwt-jackson</artifactId>
+          <version>0.11.5</version>
+          <scope>runtime</scope>
       </dependency>
   </dependencies>
 

@@ -29,12 +29,14 @@ public class SavingAccount extends BankAccount implements Serializable {
         super(accountNumber, accountHolderNumber);
         this.setMonthlyInterestRate(interestRate);
         this.setMinimumBalanceInMonth(this.getBalance());
+        this.setType("Saving");
     }
 
     public SavingAccount(String accountNumber, String accountHolderNumber, double initialAmount, float interestRate) {
         super(accountNumber, accountHolderNumber, initialAmount);
         this.setMonthlyInterestRate(interestRate);
         this.setMinimumBalanceInMonth(this.getBalance());
+        this.setType("Saving");
     }
 }
 

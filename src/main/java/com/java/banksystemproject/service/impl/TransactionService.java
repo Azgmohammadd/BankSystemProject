@@ -1,13 +1,19 @@
 package com.java.banksystemproject.service.impl;
 
+import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.Transaction;
 import com.java.banksystemproject.model.constant.TransactionType;
 import com.java.banksystemproject.service.ITransactionService;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 public class TransactionService implements ITransactionService {
+    private final ITransactionDao transactionDao;
     private double deductFees(double amount, TransactionType transactionType) {
         switch (transactionType) {
             case DEPOSITS, WITHDRAWALS -> {
@@ -64,4 +70,15 @@ public class TransactionService implements ITransactionService {
                 .build();
     }
 
+    @Override
+    public Transaction get(String transactionID) {
+        Optional<Transaction> transaction = transactionDao.get(Long.parseLong(transactionID));
+
+        return transaction.orElse(null);
+    }
+
+    @Override
+    public List<Transaction> getAll() {
+        return (List<Transaction>) transactionDao.getAll();
+    }
 }

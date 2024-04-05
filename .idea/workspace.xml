@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f07153a6-807a-4a12-ab9d-314c1a41aecf" name="Changes" comment="DataBase Start">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/TransactionDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/service/account/factory/BankAccountServiceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/service/account/factory/CheckingAccountServiceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/service/account/factory/SavingAccountServiceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f07153a6-807a-4a12-ab9d-314c1a41aecf" name="Changes" comment="authentication">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/controller/user/BankUserLoginServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/controller/user/BankUserRegisterServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/BankAccountDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/BankAccountDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/JDBC/BankAccountDaoJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/JDBC/BankAccountDaoJDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/BankAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/CheckingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/CheckingAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/SavingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/model/account/SavingAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/service/account/impl/BankAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/service/account/impl/BankAccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dao/BankAccountDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao/BankAccountDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/AccountServiceThreadSafeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/AccountServiceThreadSafeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/controller/HelloServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/util/impl/JPAUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/banksystemproject/util/impl/JPAUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +29,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="JUnit4 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -101,6 +95,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.java.banksystemproject.service" />
+      <recent name="com.java.banksystemproject.dao.impl" />
       <recent name="com.java.banksystemproject.util.impl" />
       <recent name="com.java.banksystemproject.entities.constants" />
     </key>
@@ -110,11 +106,14 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="junit.framework.TestCase" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.java.banksystemproject.service.factory" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="dao" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankAccountDaoTest.testGetAll">
+  <component name="RunManager" selected="Smart Tomcat.TomCat">
     <configuration name="BankAccountDaoTest.testDelete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="BankSystemProject" />
       <extension name="coverage">
@@ -204,6 +203,9 @@
       <option name="catalinaBase" value="$USER_HOME$/.SmartTomcat/BankSystemProject/BankSystemProject" />
       <option name="contextPath" value="/BankSystemProject" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="extraClassPath" value="" />
       <option name="tomcatInfo">
         <TomcatInfo>
@@ -220,11 +222,11 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.BankServiceTest.filterSavingAccountsAndApplyInterestTest" />
-      <item itemvalue="Smart Tomcat.TomCat" />
       <item itemvalue="JUnit.BankAccountDaoTest.testSave" />
       <item itemvalue="JUnit.BankAccountDaoTest.testDelete" />
       <item itemvalue="JUnit.BankAccountDaoTest.testGet" />
       <item itemvalue="JUnit.BankAccountDaoTest.testGetAll" />
+      <item itemvalue="Smart Tomcat.TomCat" />
     </list>
     <recent_temporary>
       <list>
@@ -259,7 +261,8 @@
       <workItem from="1710231196569" duration="1995000" />
       <workItem from="1710260037359" duration="2689000" />
       <workItem from="1710264121339" duration="1389000" />
-      <workItem from="1710575493452" duration="4083000" />
+      <workItem from="1710575493452" duration="10486000" />
+      <workItem from="1710608250374" duration="8681000" />
     </task>
     <task id="LOCAL-00001" summary="V3">
       <created>1710101433194</created>
@@ -289,7 +292,28 @@
       <option name="project" value="LOCAL" />
       <updated>1710575881211</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="merge">
+      <created>1710582598165</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710582598165</updated>
+    </task>
+    <task id="LOCAL-00006" summary="merge">
+      <created>1710582776459</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710582776460</updated>
+    </task>
+    <task id="LOCAL-00007" summary="authentication">
+      <created>1710610544268</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710610544268</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,20 +334,27 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="V3" />
     <MESSAGE value="DataBase Start" />
-    <option name="LAST_COMMIT_MESSAGE" value="DataBase Start" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="authentication" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/dao/BankAccountDaoTest.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/java/banksystemproject/controller/user/BankUserRegisterServlet.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/dao/BankAccountDaoTest.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/java/banksystemproject/controller/user/BankUserLoginServlet.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/java/banksystemproject/dao/impl/BankUserDao.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

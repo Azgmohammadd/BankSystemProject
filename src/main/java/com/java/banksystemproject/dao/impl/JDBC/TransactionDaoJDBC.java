@@ -75,18 +75,17 @@ public class TransactionDaoJDBC implements ITransactionDao {
     @Override
     public void save(Transaction transaction) {
         try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO TRANSACTIONS(TRANSACTION_ID, TRANSACTION_TYPE, AMOUNT, TRANSACTION_DATE, SOURCE_ACCOUNT_NUMBER, TARGET_ACCOUNT_NUMBER, STATUS, FEE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")) {
-                ps.setLong(1, transaction.getTransactionId());
-                ps.setString(2, transaction.getTransactionType().name());
-                ps.setDouble(3, transaction.getAmount());
+            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO TRANSACTIONS(TRANSACTION_TYPE, AMOUNT, TRANSACTION_DATE, SOURCE_ACCOUNT_NUMBER, TARGET_ACCOUNT_NUMBER, STATUS, FEE, TRANSACTION_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")) {
+                ps.setString(1, transaction.getTransactionType().name());
+                ps.setDouble(2, transaction.getAmount());
                 java.util.Date utilDate = transaction.getTransactionDate();
                 java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-                ps.setDate(4, sqlDate);
-//                ps.setDate(4, (java.sql.Date) transaction.getTransactionDate());
-                ps.setString(5, transaction.getSourceAccountNumber());
-                ps.setString(6, transaction.getTargetAccountNumber());
-                ps.setString(7, transaction.getStatus().name());
-                ps.setDouble(8, transaction.getFee());
+                ps.setDate(3, sqlDate);
+                ps.setString(4, transaction.getSourceAccountNumber());
+                ps.setString(5, transaction.getTargetAccountNumber());
+                ps.setString(6, transaction.getStatus().name());
+                ps.setDouble(7, transaction.getFee());
+                ps.setLong(8, transaction.getTransactionId());
 
                 ps.executeUpdate();
             }
