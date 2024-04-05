@@ -8,6 +8,7 @@ import com.java.banksystemproject.model.Transaction;
 import com.java.banksystemproject.model.constant.TransactionStatus;
 import com.java.banksystemproject.service.exception.ExceptionMessageCodes;
 import com.java.banksystemproject.service.exception.InsufficientFundsException;
+import com.java.banksystemproject.service.exception.InvalidTransactionException;
 import com.java.banksystemproject.service.impl.TransactionService;
 
 public class CheckingAccountService extends BankAccountService {
@@ -28,9 +29,16 @@ public class CheckingAccountService extends BankAccountService {
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_NEGATIVE_AMOUNT);
         }
 
+
+        if (transaction.getStatus().equals(TransactionStatus.FAILED)) {
+            throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
+        }
+
+        this.feeTransaction(account, transaction);
         synchronized (lock) {
             if (checkingAccount.getBalance() + checkingAccount.getOverdraftLimit() < amountWithFee) {
                 transaction.setStatus(TransactionStatus.FAILED);
+                this.rollbackFee(account, transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_AND_OVER_DRAFT_LIMIT);
             }
             checkingAccount.setBalance(checkingAccount.getBalance() - amountWithFee);

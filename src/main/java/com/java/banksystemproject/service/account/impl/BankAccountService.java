@@ -9,6 +9,7 @@ import com.java.banksystemproject.service.exception.ExceptionMessageCodes;
 import com.java.banksystemproject.service.exception.InsufficientFundsException;
 import com.java.banksystemproject.service.account.IBankAccountService;
 
+import com.java.banksystemproject.service.exception.InvalidTransactionException;
 import com.java.banksystemproject.service.impl.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -36,13 +37,20 @@ public class BankAccountService implements IBankAccountService {
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_NEGATIVE_AMOUNT);
         }
 
+        if (transaction.getStatus().equals(TransactionStatus.FAILED)) {
+            throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
+        }
+
+        this.feeTransaction(account, transaction);
+
         synchronized (lock) {
-            if (account.getBalance() + amount < transaction.getFee()) {
+            if (account.getBalance()  < amount) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
-                throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_AND_AMOUNT_TO_PAY_FEE);
+                this.rollbackFee(account, transaction);
+                throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
             }
-            bankAccountDao.updateBalance(account, account.getBalance() + amount - transaction.getFee());
+            bankAccountDao.updateBalance(account, account.getBalance() + amount);
         }
 
         transaction.setStatus(TransactionStatus.DONE);
@@ -62,13 +70,21 @@ public class BankAccountService implements IBankAccountService {
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_NEGATIVE_AMOUNT);
         }
 
+
+        if (transaction.getStatus().equals(TransactionStatus.FAILED)) {
+            throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
+        }
+
+        this.feeTransaction(account, transaction);
+
         synchronized (lock) {
             if (account.getBalance() < amountWithFee) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
+                this.rollbackFee(account, transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
             }
-            bankAccountDao.updateBalance(account, account.getBalance() - amountWithFee);
+            bankAccountDao.updateBalance(account, account.getBalance());
         }
 
         transaction.setStatus(TransactionStatus.DONE);
@@ -81,13 +97,15 @@ public class BankAccountService implements IBankAccountService {
     public Transaction getBalance(BankAccount account) {
         Transaction transaction = transactionService.createGetBalanceTransaction(account);
         reentrantLock.lock();
+
         try {
             if (account.getBalance() < transaction.getFee()) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
-                throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
+                throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
             }
-            bankAccountDao.updateBalance(account, account.getBalance() - transaction.getFee());
+            this.feeTransaction(account, transaction);
+            bankAccountDao.updateBalance(account, account.getBalance());
         } finally {
             reentrantLock.unlock();
         }
@@ -96,6 +114,16 @@ public class BankAccountService implements IBankAccountService {
         transactionDao.save(transaction);
 
         return transaction;
+    }
+
+    @Override
+    public void feeTransaction(BankAccount bankAccount, Transaction transaction) {
+        bankAccountDao.updateBalance(bankAccount, bankAccount.getBalance() - transaction.getFee());
+    }
+
+    @Override
+    public void rollbackFee(BankAccount bankAccount, Transaction transaction) {
+        bankAccountDao.updateBalance(bankAccount, bankAccount.getBalance() + transaction.getFee());
     }
 
     @Override
