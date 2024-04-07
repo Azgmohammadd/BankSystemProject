@@ -8,5 +8,9 @@ public interface IBankAccountService {
     Transaction withdraw(BankAccount account, double amount);
     Transaction getBalance(BankAccount account);
 
+    void feeTransaction(BankAccount bankAccount, Transaction transaction);
+
+    void rollbackFee(BankAccount bankAccount, Transaction transaction);
+
     void create(BankAccount bankAccount);
 }

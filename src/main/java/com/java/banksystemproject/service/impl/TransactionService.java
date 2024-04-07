@@ -3,6 +3,7 @@ package com.java.banksystemproject.service.impl;
 import com.java.banksystemproject.dao.ITransactionDao;
 import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.Transaction;
+import com.java.banksystemproject.model.constant.TransactionStatus;
 import com.java.banksystemproject.model.constant.TransactionType;
 import com.java.banksystemproject.service.ITransactionService;
 import lombok.RequiredArgsConstructor;
@@ -31,24 +32,36 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public Transaction createWithdrawTransaction(BankAccount account, double amount) {
-        return Transaction.builder()
+        Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.WITHDRAWALS)
                 .transactionDate(new Date())
                 .amount(amount)
                 .sourceAccountNumber(account.getAccountNumber())
                 .fee(deductFees(amount, TransactionType.WITHDRAWALS))
                 .build();
+
+        if (transaction.getFee() > amount) {
+            transaction.setStatus(TransactionStatus.FAILED);
+        }
+
+        return transaction;
     }
 
     @Override
     public Transaction createDepositTransaction(BankAccount account, double amount) {
-        return Transaction.builder()
+        Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.DEPOSITS)
                 .transactionDate(new Date())
                 .amount(amount)
                 .sourceAccountNumber(account.getAccountNumber())
                 .fee(deductFees(amount, TransactionType.DEPOSITS))
                 .build();
+        
+        if (transaction.getFee() > amount) {
+            transaction.setStatus(TransactionStatus.FAILED);
+        }
+
+        return transaction;
     }
 
     @Override

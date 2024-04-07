@@ -78,7 +78,14 @@
                                                     <input type="hidden" class="hidden_acc_id"  name="selectedAccountNumber" value="${account.accountNumber}" />
                                                     <small id="balanceWarning" class="form-text text-muted">Please make sure you have enough balance</small>
                                                 </div>
-                                                <input type="submit" class="btn btn-warning btn-block" value="Submit" />
+                                                <c:choose>
+                                                    <c:when test="${not isUser}">
+                                                        <input type="submit" class="btn btn-warning btn-block" value="Only the user can do transaction" disabled="disabled" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="submit" class="btn btn-warning btn-block" value=Submit" />
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </form>
                                         </div>
                                     </div>
@@ -94,7 +101,14 @@
                                                         <input type="text" class="form-control" id="depositInput" name="amount" placeholder="Enter amount">
                                                         <input type="hidden" class="hidden_acc_id" name="selectedAccountNumber" value="${account.accountNumber}" />
                                                 </div>
-                                                <input type="submit" class="btn btn-success btn-block" value="Submit" />
+                                                <c:choose>
+                                                    <c:when test="${not isUser}">
+                                                        <input type="submit" class="btn btn-success btn-block" value="Only the user can do transaction" disabled="disabled" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="submit" class="btn btn-success btn-block" value=Submit" />
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </form>
                                         </div>
                                     </div>

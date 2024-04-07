@@ -36,7 +36,13 @@ public class BankUserLoginServlet extends HttpServlet {
             request.setAttribute("messageType", "success");
             request.setAttribute("messageText", "Login Was Successful!");
             request.setAttribute("token", authResponse.getAccessToken());
-            response.sendRedirect(request.getContextPath() + "/user?username=" + user.getUsername());
+            if (authResponse.getRole().equals("USER")) {
+                session.setAttribute("role", "USER");
+                response.sendRedirect(request.getContextPath() + "/user?username=" + user.getUsername());
+            } else if (authResponse.getRole().equals("ADMIN")) {
+                session.setAttribute("role", "ADMIN");
+                response.sendRedirect(request.getContextPath() + "/admin");
+            }
         }
         catch (IllegalArgumentException e){
             request.setAttribute("messageType", "error");
