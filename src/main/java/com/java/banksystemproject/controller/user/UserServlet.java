@@ -27,6 +27,7 @@ public class UserServlet extends HttpServlet {
         List<BankAccount> accounts = bankUserService.getAllAccounts(bankUser);
         request.setAttribute("accounts", accounts);
 
+        request.setAttribute("isUser", bankUser.getRole().name().equals("USER"));
 
         request.getRequestDispatcher("/user.jsp").forward(request, response);
     }

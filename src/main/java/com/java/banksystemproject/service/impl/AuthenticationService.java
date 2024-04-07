@@ -58,6 +58,7 @@ public class AuthenticationService implements IAuthenticationService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .responseMessage("authenticated")
+                .role(user.getRole().name())
                 .build();
     }
 
