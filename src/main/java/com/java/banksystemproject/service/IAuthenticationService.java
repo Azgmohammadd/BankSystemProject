@@ -12,5 +12,5 @@ public interface IAuthenticationService {
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
 
-    AuthenticationResponse logout(HttpServletRequest request, HttpServletResponse response);
+    void logout(HttpServletRequest request, HttpServletResponse response);
 }

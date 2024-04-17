@@ -34,16 +34,18 @@ public class SavingAccountService extends BankAccountService implements ISavingA
             throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
         }
 
-        this.feeTransaction(account, transaction);
 
         synchronized (lock) {
+            this.feeTransaction(account, transaction);
+
             if (savingAccount.getBalance() < amountWithFee + savingAccount.getMinimumBalance()) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
                 this.rollbackFee(account, transaction);
                 throw new InvalidTransactionException(ExceptionMessageCodes.BSS_MINIMUM_BALANCE_LIMIT);
             }
-            bankAccountDao.updateBalance(account, account.getBalance() - amountWithFee);
+
+            bankAccountDao.updateBalance(account, account.getBalance() - amount);
         }
 
         transaction.setStatus(TransactionStatus.DONE);

@@ -6,7 +6,7 @@ import com.java.banksystemproject.util.impl.TransactionIdGenerator;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor

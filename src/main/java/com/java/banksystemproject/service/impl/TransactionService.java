@@ -34,7 +34,7 @@ public class TransactionService implements ITransactionService {
     public Transaction createWithdrawTransaction(BankAccount account, double amount) {
         Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.WITHDRAWALS)
-                .transactionDate(new Date())
+                .transactionDate(new java.sql.Date(new Date().getTime()))
                 .amount(amount)
                 .sourceAccountNumber(account.getAccountNumber())
                 .fee(deductFees(amount, TransactionType.WITHDRAWALS))
@@ -51,7 +51,7 @@ public class TransactionService implements ITransactionService {
     public Transaction createDepositTransaction(BankAccount account, double amount) {
         Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.DEPOSITS)
-                .transactionDate(new Date())
+                .transactionDate(new java.sql.Date(new Date().getTime()))
                 .amount(amount)
                 .sourceAccountNumber(account.getAccountNumber())
                 .fee(deductFees(amount, TransactionType.DEPOSITS))
@@ -68,7 +68,7 @@ public class TransactionService implements ITransactionService {
     public Transaction createGetBalanceTransaction(BankAccount account) {
         return Transaction.builder()
                 .transactionType(TransactionType.GET_BALANCE)
-                .transactionDate(new Date())
+                .transactionDate(new java.sql.Date(new Date().getTime()))
                 .sourceAccountNumber(account.getAccountNumber())
                 .fee(deductFees(0, TransactionType.GET_BALANCE))
                 .build();
@@ -78,7 +78,7 @@ public class TransactionService implements ITransactionService {
     public Transaction createApplyInterestTransaction(BankAccount account) {
         return Transaction.builder()
                 .transactionType(TransactionType.APPLY_INTEREST)
-                .transactionDate(new Date())
+                .transactionDate(new java.sql.Date(new Date().getTime()))
                 .sourceAccountNumber(account.getAccountNumber())
                 .build();
     }

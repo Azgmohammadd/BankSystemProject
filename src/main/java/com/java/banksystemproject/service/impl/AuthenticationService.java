@@ -62,12 +62,12 @@ public class AuthenticationService implements IAuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse logout(HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return null;
+            return;
         }
 
         jwt = authHeader.substring(7);
@@ -79,8 +79,5 @@ public class AuthenticationService implements IAuthenticationService {
 
             tokenDao.save(stored_token);
         }
-        return AuthenticationResponse.builder()
-                .responseMessage("logged_out")
-                .build();
     }
 }
