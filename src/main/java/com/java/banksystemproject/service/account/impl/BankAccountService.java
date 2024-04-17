@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -41,15 +42,17 @@ public class BankAccountService implements IBankAccountService {
             throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
         }
 
-        this.feeTransaction(account, transaction);
 
         synchronized (lock) {
+            this.feeTransaction(account, transaction);
+
             if (account.getBalance()  < amount) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
                 this.rollbackFee(account, transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
             }
+
             bankAccountDao.updateBalance(account, account.getBalance() + amount);
         }
 
@@ -75,15 +78,17 @@ public class BankAccountService implements IBankAccountService {
             throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
         }
 
-        this.feeTransaction(account, transaction);
 
         synchronized (lock) {
+            this.feeTransaction(account, transaction);
+
             if (account.getBalance() < amountWithFee) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 transactionDao.save(transaction);
                 this.rollbackFee(account, transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE);
             }
+
             bankAccountDao.updateBalance(account, account.getBalance());
         }
 
@@ -133,6 +138,17 @@ public class BankAccountService implements IBankAccountService {
         }catch (Exception e) {
             logger.error(e.getMessage());
         }
+    }
+
+    @Override
+    public Optional<BankAccount> get(BankAccount bankAccount) {
+        try {
+            return bankAccountDao.get(bankAccount.getAccountNumber());
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
+        return Optional.empty();
     }
 }
 

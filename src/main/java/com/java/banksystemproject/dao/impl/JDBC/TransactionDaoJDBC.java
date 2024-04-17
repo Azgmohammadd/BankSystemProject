@@ -78,9 +78,7 @@ public class TransactionDaoJDBC implements ITransactionDao {
             try (PreparedStatement ps = conn.prepareStatement("INSERT INTO TRANSACTIONS(TRANSACTION_TYPE, AMOUNT, TRANSACTION_DATE, SOURCE_ACCOUNT_NUMBER, TARGET_ACCOUNT_NUMBER, STATUS, FEE, TRANSACTION_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")) {
                 ps.setString(1, transaction.getTransactionType().name());
                 ps.setDouble(2, transaction.getAmount());
-                java.util.Date utilDate = transaction.getTransactionDate();
-                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-                ps.setDate(3, sqlDate);
+                ps.setDate(3, transaction.getTransactionDate());
                 ps.setString(4, transaction.getSourceAccountNumber());
                 ps.setString(5, transaction.getTargetAccountNumber());
                 ps.setString(6, transaction.getStatus().name());

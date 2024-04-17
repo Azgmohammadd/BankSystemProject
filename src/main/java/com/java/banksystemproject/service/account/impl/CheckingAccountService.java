@@ -12,13 +12,13 @@ import com.java.banksystemproject.service.exception.InvalidTransactionException;
 import com.java.banksystemproject.service.impl.TransactionService;
 
 public class CheckingAccountService extends BankAccountService {
-        public CheckingAccountService(TransactionService transactionService, IBankAccountDao bankAccountDao, ITransactionDao transactionDao) {
-            super(transactionService, bankAccountDao, transactionDao);
-        }
+    public CheckingAccountService(TransactionService transactionService, IBankAccountDao bankAccountDao, ITransactionDao transactionDao) {
+        super(transactionService, bankAccountDao, transactionDao);
+    }
 
     @Override
     public Transaction withdraw(BankAccount account, double amount) {
-        if(!(account instanceof CheckingAccount checkingAccount))
+        if (!(account instanceof CheckingAccount checkingAccount))
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_INCOMPATIBLE_ACCOUNT_TYPE);
 
         Transaction transaction = transactionService.createWithdrawTransaction(checkingAccount, amount);
@@ -26,6 +26,7 @@ public class CheckingAccountService extends BankAccountService {
 
         if (amount < 0) {
             transaction.setStatus(TransactionStatus.FAILED);
+            transactionDao.save(transaction);
             throw new IllegalArgumentException(ExceptionMessageCodes.BSS_NEGATIVE_AMOUNT);
         }
 
@@ -34,17 +35,21 @@ public class CheckingAccountService extends BankAccountService {
             throw new InvalidTransactionException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_FOR_FEE_TRANSACTION);
         }
 
-        this.feeTransaction(account, transaction);
         synchronized (lock) {
+            this.feeTransaction(account, transaction);
+
             if (checkingAccount.getBalance() + checkingAccount.getOverdraftLimit() < amountWithFee) {
                 transaction.setStatus(TransactionStatus.FAILED);
                 this.rollbackFee(account, transaction);
                 throw new InsufficientFundsException(ExceptionMessageCodes.BSS_INSUFFICIENT_BALANCE_AND_OVER_DRAFT_LIMIT);
             }
-            checkingAccount.setBalance(checkingAccount.getBalance() - amountWithFee);
+
+
+            bankAccountDao.updateBalance(checkingAccount, checkingAccount.getBalance() - amount);
         }
 
         transaction.setStatus(TransactionStatus.DONE);
+        transactionDao.save(transaction);
         return transaction;
     }
 }

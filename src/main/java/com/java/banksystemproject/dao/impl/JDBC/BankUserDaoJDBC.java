@@ -72,7 +72,12 @@ public class BankUserDaoJDBC implements IBankUserDao {
                             .lastName(resultSet.getString("lastName"))
                             .nationalCode(resultSet.getString("national_Code"))
                             .build();
-                    bankAccountsId.add(resultSet.getString("BANK_ACCOUNT_ID"));
+
+                    String accountId = resultSet.getString("BANK_ACCOUNT_ID");
+
+                    if (accountId != null) {
+                        bankAccountsId.add(accountId);
+                    }
                 }
 
                 if (user != null) {

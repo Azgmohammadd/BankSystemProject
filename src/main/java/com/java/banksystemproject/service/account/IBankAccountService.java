@@ -3,6 +3,8 @@ package com.java.banksystemproject.service.account;
 import com.java.banksystemproject.model.Transaction;
 import com.java.banksystemproject.model.account.BankAccount;
 
+import java.util.Optional;
+
 public interface IBankAccountService {
     Transaction deposit(BankAccount account, double amount);
     Transaction withdraw(BankAccount account, double amount);
@@ -13,4 +15,6 @@ public interface IBankAccountService {
     void rollbackFee(BankAccount bankAccount, Transaction transaction);
 
     void create(BankAccount bankAccount);
+
+    Optional<BankAccount> get(BankAccount bankAccount);
 }

@@ -156,7 +156,7 @@ public class BankAccountDaoJDBC implements IBankAccountDao {
     @Override
     public void updateMinimumBalance(SavingAccount account, double balance) {
         try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement("UPDATE ACCOUNTS SET MINIMUM_BALANCE_IN_MONTH = ? WHERE ACCOUNT_NUMBER = ?")) {
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE ACCOUNTS SET MINIMUM_BALANCE = ? WHERE ACCOUNT_NUMBER = ?")) {
                 ps.setDouble(1, balance);
                 ps.setString(2, account.getAccountNumber());
 

@@ -1,71 +1,103 @@
 package services;
 
-import com.java.banksystemproject.dao.impl.JDBC.BankAccountDaoJDBC;
-import com.java.banksystemproject.dao.impl.JDBC.TransactionDaoJDBC;
+import com.java.banksystemproject.model.account.BankAccount;
 import com.java.banksystemproject.model.account.CheckingAccount;
+import com.java.banksystemproject.service.account.IBankAccountService;
+import com.java.banksystemproject.service.account.factory.CheckingAccountServiceFactory;
 import com.java.banksystemproject.service.exception.InsufficientFundsException;
 import com.java.banksystemproject.service.exception.InvalidTransactionException;
-import com.java.banksystemproject.service.account.impl.CheckingAccountService;
-import com.java.banksystemproject.service.impl.TransactionService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class CheckingAccountServiceTest {
 
-    TransactionService transactionService = new TransactionService();
-    BankAccountDaoJDBC bankAccountDaoJDBC = new BankAccountDaoJDBC();
-    TransactionDaoJDBC transactionDaoJDBC = new TransactionDaoJDBC();
-    private final CheckingAccountService service = new CheckingAccountService(transactionService, bankAccountDaoJDBC, transactionDaoJDBC);
-    private CheckingAccount checkingAccount;
+    private static IBankAccountService bankAccountService;
+    private static CheckingAccount checkingAccount;
 
-    @Before
-    public void startup() {
-        checkingAccount = CheckingAccount.builder().accountNumber("5859831180088659").accountHolderNumber("محمد ازقندی").balance(2000000).overdraftLimit(100000.0).build();
+    @BeforeAll
+    public static void startup() {
+        bankAccountService = new CheckingAccountServiceFactory().getJDBC();
+        checkingAccount = CheckingAccount.builder()
+                .accountNumber("5859831180088659")
+                .accountHolderNumber("محمد ازقندی")
+                .balance(2000000)
+                .overdraftLimit(100000.0)
+                .build();
+
+        bankAccountService.create(checkingAccount);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void depositNegationValueTest() {
-        service.deposit(checkingAccount, -20000);
+        assertThrows(IllegalArgumentException.class, () -> bankAccountService.deposit(checkingAccount, -20000));
     }
 
     @Test
     public void depositPositiveValueTest() {
-        service.deposit(checkingAccount, 200000);
-        assertEquals(checkingAccount.getBalance(), 2200000, 0);
+        bankAccountService.deposit(checkingAccount, 200000);
+        Optional<BankAccount> ch = bankAccountService.get(checkingAccount);
+
+        if (ch.isPresent()) {
+            assertEquals(ch.get().getBalance(), 2200000, 0);
+        } else {
+            throw new RuntimeException("Checking account not found");
+        }
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withdrawNegationValueTest() throws InsufficientFundsException, InvalidTransactionException {
-        service.withdraw(checkingAccount, -20000);
+        assertThrows(IllegalArgumentException.class, () -> bankAccountService.withdraw(checkingAccount, -20000));
     }
 
-    @Test(expected = InsufficientFundsException.class)
+    @Test
     public void withdrawToMuchValueTest() throws InsufficientFundsException, InvalidTransactionException {
-        service.withdraw(checkingAccount, 200000000);
+        assertThrows(InsufficientFundsException.class, () -> bankAccountService.withdraw(checkingAccount, 200000000));
     }
 
-    @Test(expected = InsufficientFundsException.class)
+    @Test
     public void withdrawOverDraftLimitTest() throws InsufficientFundsException, InvalidTransactionException {
-        service.withdraw(checkingAccount, 2120000);
+        assertThrows(InsufficientFundsException.class, () -> bankAccountService.withdraw(checkingAccount, 2120000));
     }
 
     @Test
     public void withdrawUnderDraftLimitTest() throws InsufficientFundsException, InvalidTransactionException {
-        service.withdraw(checkingAccount, 2020000);
-        assertEquals(checkingAccount.getBalance(), -20000, 0);
+        bankAccountService.withdraw(checkingAccount, 2020000);
+        Optional<BankAccount> ch = bankAccountService.get(checkingAccount);
+
+        if (ch.isPresent()) {
+            assertEquals(ch.get().getBalance(), -20000, 0);
+        } else {
+            throw new RuntimeException("Checking account not found");
+        }
     }
 
     @Test
     public void withdrawEnoughValueTest() throws InsufficientFundsException, InvalidTransactionException {
-        service.withdraw(checkingAccount, 2000000);
-        assertEquals(checkingAccount.getBalance(), 0, 0);
+        bankAccountService.withdraw(checkingAccount, 2000000);
+        Optional<BankAccount> ch = bankAccountService.get(checkingAccount);
+
+        if (ch.isPresent()) {
+            assertEquals(ch.get().getBalance(), 0, 0);
+        } else {
+            throw new RuntimeException("Checking account not found");
+        }
     }
 
     @Test
     public void getBalanceTest() {
-        assertEquals(checkingAccount.getBalance(), 2000000, 0);
+        Optional<BankAccount> ch = bankAccountService.get(checkingAccount);
+
+        if (ch.isPresent()) {
+            assertEquals(ch.get().getBalance(), 2000000, 0);
+        } else {
+            throw new RuntimeException("Checking account not found");
+        }
     }
 }
 

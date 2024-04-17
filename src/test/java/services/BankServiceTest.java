@@ -3,18 +3,19 @@ package services;
 import com.java.banksystemproject.dao.impl.BankDao;
 import com.java.banksystemproject.model.account.SavingAccount;
 import com.java.banksystemproject.service.impl.BankService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class BankServiceTest {
-    private BankDao bank;
+    private static BankDao bank;
 
-    @Before
-    public void startup() {
+    @BeforeAll
+    public static void startup() {
         bank = new BankDao();
         for (int i = 0; i < 1000; i++)
             bank.save(SavingAccount.builder().accountNumber(String.valueOf(i)).accountHolderNumber(String.valueOf(i))
