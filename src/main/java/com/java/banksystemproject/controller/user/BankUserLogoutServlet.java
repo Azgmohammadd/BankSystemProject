@@ -16,7 +16,7 @@ import java.io.IOException;
 public class BankUserLogoutServlet extends HttpServlet {
     private final IAuthenticationService authenticationService = new AuthenticationServiceFactory().getJDBC();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             authenticationService.logout(request, response);
             HttpSession session = request.getSession(false); // create session if it doesn't exist
@@ -25,7 +25,7 @@ public class BankUserLogoutServlet extends HttpServlet {
             request.setAttribute("messageType", "success");
             request.setAttribute("messageText", "Logout Was Successful!");
 
-            response.sendRedirect(request.getContextPath() + "/index.html");
+            response.sendRedirect(request.getContextPath() + "/");
         }
         catch (IllegalArgumentException e){
             request.setAttribute("messageType", "error");

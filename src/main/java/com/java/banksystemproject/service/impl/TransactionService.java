@@ -70,6 +70,7 @@ public class TransactionService implements ITransactionService {
                 .transactionType(TransactionType.GET_BALANCE)
                 .transactionDate(new java.sql.Date(new Date().getTime()))
                 .sourceAccountNumber(account.getAccountNumber())
+                .amount(account.getBalance())
                 .fee(deductFees(0, TransactionType.GET_BALANCE))
                 .build();
     }

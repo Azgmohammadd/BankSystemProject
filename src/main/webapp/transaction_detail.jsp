@@ -34,6 +34,10 @@
                         <p class="card-text">${transaction_detail.amount}</p>
                     </div>
                     <div class=" card-text d-flex justify-content-between">
+                        <p class="text-info">type</p>
+                        <p class="card-text">${transaction_detail.transactionType}</p>
+                    </div>
+                    <div class=" card-text d-flex justify-content-between">
                         <p class="text-info">status</p>
                         <p class="card-text">${transaction_detail.status}</p>
                     </div>
