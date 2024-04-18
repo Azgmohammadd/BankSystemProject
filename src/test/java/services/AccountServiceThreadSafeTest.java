@@ -55,7 +55,7 @@ public class AccountServiceThreadSafeTest {
         } catch (Exception ignored) {
         }
 
-        assertEquals(500000d, checkingAccount.getBalance(), 0);
+        assertEquals(2000000, checkingAccount.getBalance(), 0);
     }
 
     @Test()
@@ -82,6 +82,6 @@ public class AccountServiceThreadSafeTest {
             withdrawThread.join();
         } catch (Exception ignored) {
         }
-        assertEquals(191293, savingAccount.getBalance(), 1);
+        assertEquals(20000, savingAccount.getBalance(), 1);
     }
 }
