@@ -13,6 +13,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 my-3">
+                    <a href="${pageContext.request.contextPath}/logout" >logout</a>
                     <h4 class="display-4">All Accounts</h4>
                 </div>
             </div>

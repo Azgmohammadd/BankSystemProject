@@ -17,7 +17,9 @@
         <script src="js/script.js"></script>
     </head>
     <body>
+
         <div class="container py-2 my-2">
+            <a href="${pageContext.request.contextPath}/logout" >logout</a>
             <h4 class="display-4"><c:out value="${username} accounts" /></h4>
             <c:if test="${empty accounts}">
                 <a href="${pageContext.request.contextPath}/accounts?username=${username}" class="text-muted">Create an account</a>
@@ -83,7 +85,7 @@
                                                         <input type="submit" class="btn btn-warning btn-block" value="Only the user can do transaction" disabled="disabled" />
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <input type="submit" class="btn btn-warning btn-block" value=Submit" />
+                                                        <input type="submit" class="btn btn-warning btn-block" value="Submit" />
                                                     </c:otherwise>
                                                 </c:choose>
                                             </form>
@@ -106,7 +108,7 @@
                                                         <input type="submit" class="btn btn-success btn-block" value="Only the user can do transaction" disabled="disabled" />
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <input type="submit" class="btn btn-success btn-block" value=Submit" />
+                                                        <input type="submit" class="btn btn-success btn-block" value="Submit" />
                                                     </c:otherwise>
                                                 </c:choose>
                                             </form>
